@@ -1,5 +1,249 @@
 export const BLOG_POSTS = [
   {
+    id: "smart-contract-interactions-private-networks",
+    title: "Interact with Deployed Smart Contracts — Read and Write Operations on Private Networks",
+    slug: "smart-contract-interactions-private-networks",
+    excerpt: "Learn how to interact with deployed smart contracts using web3.js and web3js-quorum. Master read and write operations on both public and private Ethereum networks.",
+    date: "2026-05-23",
+    author: "Derrk Samuel",
+    category: "Blockchain",
+    tags: ["Smart Contracts", "Web3", "Ethereum", "Private Networks", "Solidity", "Development"],
+    readTime: "10 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/61655169e_generated_image.png",
+    featured: false,
+    content: `## Overview
+
+This tutorial shows you how to interact with smart contracts that have been deployed to a network. Whether you're working with public blockchain networks or private Ethereum instances, understanding how to read from and write to deployed contracts is fundamental to Web3 development.
+
+## Prerequisites
+
+- A network with a deployed smart contract (see the deploying smart contracts tutorial)
+- web3.js library for public contracts
+- web3js-quorum library for private contract interactions
+- Basic understanding of Solidity smart contracts
+
+## SimpleStorage Contract
+
+This tutorial uses the \`SimpleStorage.sol\` contract as an example:
+
+\`\`\`solidity
+pragma solidity ^0.7.0;
+
+contract SimpleStorage {
+  uint public storedData;
+
+  constructor(uint initVal) public {
+    storedData = initVal;
+  }
+
+  function set(uint x) public {
+    storedData = x;
+  }
+
+  function get() view public returns (uint retVal) {
+    return storedData;
+  }
+}
+\`\`\`
+
+This simple contract allows you to store a value on-chain and retrieve it. Once deployed, you can perform read operations using the \`get\` function and write operations using the \`set\` function.
+
+## Interacting with Public Contracts
+
+### 1. Perform a Read Operation
+
+To perform a read operation, you need:
+- The contract's deployed address
+- The contract's ABI (obtained from compilation)
+
+Use the \`web3.eth.Contract\` object to create an instance and call the \`get\` function:
+
+\`\`\`javascript
+async function getValueAtAddress(
+  host,
+  deployedContractAbi,
+  deployedContractAddress,
+) {
+  const web3 = new Web3(host);
+  const contractInstance = new web3.eth.Contract(
+    deployedContractAbi,
+    deployedContractAddress,
+  );
+  const res = await contractInstance.methods.get().call();
+  console.log("Obtained value at deployed contract is: " + res);
+  return res;
+}
+\`\`\`
+
+This function:
+- Initializes a Web3 instance with your network endpoint
+- Creates a contract instance using the ABI and address
+- Calls the \`get\` method (read-only, no gas cost)
+- Returns the stored value
+
+### 2. Perform a Write Operation
+
+To perform a write operation, send a transaction to update the stored value. You need:
+- The deployed contract address and ABI
+- An account address with sufficient ETH for gas fees
+- Gas parameters
+
+\`\`\`javascript
+async function setValueAtAddress(
+  host,
+  accountAddress,
+  value,
+  deployedContractAbi,
+  deployedContractAddress,
+) {
+  const web3 = new Web3(host);
+  const contractInstance = new web3.eth.Contract(
+    deployedContractAbi,
+    deployedContractAddress,
+  );
+  const res = await contractInstance.methods
+    .set(value)
+    .send({ from: accountAddress, gasPrice: "0xFF", gasLimit: "0x24A22" });
+  return res;
+}
+\`\`\`
+
+Key parameters:
+- \`from\`: The account sending the transaction
+- \`gasPrice\`: Amount of ETH per gas unit
+- \`gasLimit\`: Maximum gas units the transaction can consume
+
+### 3. Verify Updated Values
+
+After writing a value with \`set\`, perform a \`get\` call to verify the update was successful. This confirms the transaction was mined and the state change persisted.
+
+## Interacting with Private Contracts
+
+Private contract interactions require additional setup using the \`web3js-quorum\` library, which handles encryption and privacy at the transaction level. Both read and write operations use the \`generateAndSendRawTransaction\` method.
+
+### 1. Perform a Read Operation on Private Contracts
+
+For private operations, you need:
+- Sender's private and public keys
+- Recipient's public key
+- Contract address and ABI
+
+\`\`\`javascript
+async function getValueAtAddress(
+  clientUrl,
+  address,
+  contractAbi,
+  fromPrivateKey,
+  fromPublicKey,
+  toPublicKey,
+) {
+  const Web3 = require("web3");
+  const Web3Quorum = require("web3js-quorum");
+  const web3 = new Web3Quorum(new Web3("http://localhost:22000"));
+  
+  // Find the get function ABI
+  const functionAbi = contractAbi.find((e) => {
+    return e.name === "get";
+  });
+  
+  // Prepare transaction parameters
+  const functionParams = {
+    to: address,
+    data: functionAbi.signature,
+    privateKey: fromPrivateKey,
+    privateFrom: fromPublicKey,
+    privateFor: [toPublicKey],
+  };
+  
+  // Send and wait for receipt
+  const transactionHash = await web3quorum.priv.generateAndSendRawTransaction(
+    functionParams,
+  );
+  const result = await web3quorum.priv.waitForTransactionReceipt(
+    transactionHash,
+  );
+  console.log("Value from private contract is: " + result.output);
+  return result;
+}
+\`\`\`
+
+Key differences from public contracts:
+- Uses \`generateAndSendRawTransaction\` for encryption handling
+- Specifies \`privateFrom\` and \`privateFor\` to control who sees the transaction
+- Returns encrypted transaction data visible only to participants
+
+### 2. Perform a Write Operation on Private Contracts
+
+For write operations, encode the new value into the function's ABI:
+
+\`\`\`javascript
+async function setValueAtAddress(
+  clientUrl,
+  address,
+  value,
+  contractAbi,
+  fromPrivateKey,
+  fromPublicKey,
+  toPublicKey,
+) {
+  const Web3 = require("web3");
+  const Web3Quorum = require("web3js-quorum");
+  const web3 = new Web3Quorum(new Web3("http://localhost:22000"));
+  
+  // Find the set function ABI
+  const functionAbi = contractAbi.find((e) => {
+    return e.name === "set";
+  });
+  
+  // Encode the new value as function arguments
+  const functionArgs = web3quorum.eth.abi
+    .encodeParameters(functionAbi.inputs, [value])
+    .slice(2);
+  
+  // Prepare transaction with encoded data
+  const functionParams = {
+    to: address,
+    data: functionAbi.signature + functionArgs,
+    privateKey: fromPrivateKey,
+    privateFrom: fromPublicKey,
+    privateFor: [toPublicKey],
+  };
+  
+  // Send transaction and get receipt
+  const transactionHash = await web3quorum.priv.generateAndSendRawTransaction(
+    functionParams,
+  );
+  console.log(\`Transaction hash: \${transactionHash}\`);
+  const result = await web3quorum.priv.waitForTransactionReceipt(
+    transactionHash,
+  );
+  return result;
+}
+\`\`\`
+
+Key steps:
+1. Extract the function signature from the ABI
+2. Encode the parameters using \`encodeParameters\`
+3. Append encoded arguments to the function signature
+4. Send as a private transaction
+
+### 3. Verify Updated Values
+
+Like public contracts, perform a \`get\` call after a \`set\` operation to verify the state was updated. The privacy constraints remain in effect.
+
+## Key Takeaways
+
+- **Read operations** are view-only calls that don't consume gas (public) or create on-chain records (private)
+- **Write operations** require transactions that modify contract state and consume gas
+- **Public contracts** use standard \`web3.eth.Contract\` calls
+- **Private contracts** use \`web3js-quorum\` with encryption and participant specification
+- Always verify state changes with follow-up read operations
+- Handle errors gracefully in production environments
+
+Use the Developer Quickstart to rapidly generate local blockchain networks for testing these interactions.`
+  },
+  {
     id: "crypto-scam-safeguards-onboarding",
     title: "From Scams to Safeguards: Strengthening Crypto Onboarding Through Community-Driven Narratives",
     slug: "crypto-scam-safeguards-community-onboarding",
