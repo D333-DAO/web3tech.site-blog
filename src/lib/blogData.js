@@ -1,5 +1,147 @@
 export const BLOG_POSTS = [
   {
+    id: "ubuntu-change-storage-locations",
+    title: "Change Where Ubuntu Stores New Data (Downloads, Documents, Pictures, etc.)",
+    slug: "ubuntu-change-default-storage-locations-downloads-documents",
+    excerpt: "The clean, reliable way to change where Ubuntu stores your default user folders using XDG user directories system — no app hacks, just system-level configuration.",
+    date: "2026-05-23",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Ubuntu", "Linux", "Storage", "System Configuration", "XDG"],
+    readTime: "4 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/9dfb627de_generated_image.png",
+    featured: false,
+    content: `## Overview
+
+Ubuntu uses the XDG user directories system to decide where apps save data by default. You can change these locations with one command — the actual system-level method Ubuntu uses, not app-specific hacks.
+
+## ✅ Method 1 — Change Default Folders (Recommended)
+
+Use this format:
+
+\`\`\`bash
+xdg-user-dirs-update --set NAME /absolute/path
+\`\`\`
+
+### Valid folder names (case-sensitive):
+
+- DESKTOP
+- DOWNLOAD
+- DOCUMENTS
+- MUSIC
+- PICTURES
+- PUBLICSHARE
+- TEMPLATES
+- VIDEOS
+
+### Examples
+
+**Change Downloads to another drive:**
+
+\`\`\`bash
+xdg-user-dirs-update --set DOWNLOAD /mnt/Data/Downloads
+\`\`\`
+
+**Change Pictures to a custom folder:**
+
+\`\`\`bash
+xdg-user-dirs-update --set PICTURES /home/$USER/Images
+\`\`\`
+
+**Change Documents to an external SSD:**
+
+\`\`\`bash
+xdg-user-dirs-update --set DOCUMENTS /media/$USER/SSD/Documents
+\`\`\`
+
+After running the command, log out and back in to apply changes.
+
+## 📝 Method 2 — Edit the Config File Directly
+
+Open your user directories config:
+
+\`\`\`bash
+nano ~/.config/user-dirs.dirs
+\`\`\`
+
+You'll see lines like:
+
+\`\`\`bash
+XDG_DOWNLOAD_DIR="$HOME/Downloads"
+XDG_PICTURES_DIR="$HOME/Pictures"
+\`\`\`
+
+Change the paths, save, and log out/in.
+
+## 🌍 System-Wide (All Users)
+
+Edit the system-wide defaults:
+
+\`\`\`bash
+sudo nano /etc/xdg/user-dirs.defaults
+\`\`\`
+
+**Note:** Per-user settings override system-wide settings.
+
+## 🧠 Important Notes
+
+- Paths must be absolute (/home/... or /mnt/...)
+- \`$HOME\` works in the config file but not in the command
+- Apps that ignore XDG standards (rare) may need individual configuration
+- If your path contains spaces, always quote it: \`"/media/derek samuel/FOLDER"\`
+
+## Moving Data to External Drives
+
+If you want to move all user folders to an external drive:
+
+1. Create the new folders on the external drive
+2. Move existing data safely
+3. Update all XDG paths
+4. Fix permissions
+5. Verify the drive is mounted before login
+
+**Example for external drive at** \`/media/user/EXTERNAL-DRIVE\`:
+
+\`\`\`bash
+mkdir -p "/media/user/EXTERNAL-DRIVE/Downloads"
+mkdir -p "/media/user/EXTERNAL-DRIVE/Documents"
+mkdir -p "/media/user/EXTERNAL-DRIVE/Pictures"
+
+xdg-user-dirs-update --set DOWNLOAD "/media/user/EXTERNAL-DRIVE/Downloads"
+xdg-user-dirs-update --set DOCUMENTS "/media/user/EXTERNAL-DRIVE/Documents"
+xdg-user-dirs-update --set PICTURES "/media/user/EXTERNAL-DRIVE/Pictures"
+\`\`\`
+
+Then log out and back in to apply changes.
+
+## Moving Just Kaspad (or Other Apps)
+
+If you only want to move a specific app's data (like Kaspad), you don't touch Ubuntu user folders at all. Instead, relocate the app's data directory and point the app to it.
+
+**For Kaspad on an external drive:**
+
+\`\`\`bash
+mkdir -p "/media/derek-samuel/KASPA-NODE/kaspad"
+mv ~/.kaspad/* "/media/derek-samuel/KASPA-NODE/kaspad/"
+kaspad --appdir="/media/derek-samuel/KASPA-NODE/kaspad"
+\`\`\`
+
+Or with Docker:
+
+\`\`\`bash
+docker run -d \\
+  --name kaspad \\
+  -p 16110:16110 \\
+  -p 16111:16111 \\
+  -v "/media/derek-samuel/KASPA-NODE/kaspad:/app/data" \\
+  rusty-kaspa/kaspad:latest \\
+  --appdir=/app/data
+\`\`\`
+
+External drives must be mounted before the app starts.`
+  },
+  {
     id: "docker-compose-plugin-fix",
     title: 'How to Fix "Unable to Locate Package docker-compose-plugin" on Linux PC (Debian)',
     slug: "fix-unable-to-locate-docker-compose-plugin-linux-debian",
