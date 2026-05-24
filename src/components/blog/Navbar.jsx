@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Terminal } from "lucide-react";
+import { Menu, X, Terminal, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import SearchOverlay from "@/components/blog/SearchOverlay";
 
 const NAV_LINKS = [
   { label: "Home", path: "/" },
@@ -11,9 +12,23 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
   return (
+    <>
+    <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
@@ -42,15 +57,31 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="ml-2 flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/50 bg-secondary/50 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all text-sm"
+            >
+              <Search className="w-3.5 h-3.5" />
+              <span className="text-xs">Search</span>
+              <kbd className="hidden lg:inline text-[10px] px-1.5 py-0.5 bg-background rounded border border-border/50">⌘K</kbd>
+            </button>
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden p-2 text-muted-foreground hover:text-foreground"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          {/* Mobile toggle + search */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2 text-muted-foreground hover:text-foreground"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+            <button
+              className="p-2 text-muted-foreground hover:text-foreground"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -83,5 +114,6 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </nav>
+    </>
   );
 }
