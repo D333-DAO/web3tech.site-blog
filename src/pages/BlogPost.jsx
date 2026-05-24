@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import { motion } from "framer-motion";
 import { BLOG_POSTS } from "@/lib/blogData";
 import BlogCard from "@/components/blog/BlogCard";
+import CommentSection from "@/components/blog/CommentSection";
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -107,6 +108,9 @@ export default function BlogPost() {
             )}
           </p>
         </div>
+
+        {/* Comment Section */}
+        <CommentSection postSlug={post.slug} />
 
         {/* Related posts */}
         {relatedPosts.length > 0 && (

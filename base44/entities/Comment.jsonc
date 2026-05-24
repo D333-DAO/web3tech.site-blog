@@ -1,0 +1,36 @@
+{
+  "name": "Comment",
+  "type": "object",
+  "properties": {
+    "post_slug": {
+      "type": "string",
+      "description": "The slug of the blog post this comment belongs to"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Display name of the commenter"
+    },
+    "author_email": {
+      "type": "string",
+      "description": "Email of the commenter (not displayed publicly)"
+    },
+    "content": {
+      "type": "string",
+      "description": "The comment text"
+    },
+    "parent_id": {
+      "type": "string",
+      "description": "ID of the parent comment for replies (null for top-level)"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the comment is approved for display"
+    }
+  },
+  "required": [
+    "post_slug",
+    "author_name",
+    "content"
+  ]
+}
