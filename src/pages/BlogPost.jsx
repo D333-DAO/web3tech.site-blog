@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { BLOG_POSTS } from "@/lib/blogData";
 import BlogCard from "@/components/blog/BlogCard";
 import CommentSection from "@/components/blog/CommentSection";
+import ShareButtons from "@/components/blog/ShareButtons";
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -91,6 +92,11 @@ export default function BlogPost() {
           prose-blockquote:border-primary/50 prose-blockquote:text-muted-foreground
         ">
           <ReactMarkdown>{post.content}</ReactMarkdown>
+        </div>
+
+        {/* Share buttons */}
+        <div className="mt-10 p-4 rounded-xl bg-card/50 border border-border/50">
+          <ShareButtons title={post.title} />
         </div>
 
         {/* Source attribution */}
