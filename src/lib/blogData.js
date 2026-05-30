@@ -1055,6 +1055,86 @@ docker run -d \\
 External drives must be mounted before the app starts.`
   },
   {
+    id: "manually-update-snap-store-ubuntu",
+    title: "Step-by-Step: Manually Update the Snap Store in Ubuntu Desktop 20.04.6",
+    slug: "manually-update-snap-store-ubuntu-20-04",
+    excerpt: "Learn how to manually update the Snap Store on Ubuntu 20.04.6 by stopping its background processes and running a targeted refresh — because the Snap Store often runs silently and must be terminated before updating.",
+    date: "2026-05-30",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Ubuntu", "Snap", "Linux", "Package Manager", "System Administration"],
+    readTime: "3 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/9dfb627de_generated_image.png",
+    featured: false,
+    content: `## Overview
+
+You can manually update the Snap Store on Ubuntu 20.04.6 by fully stopping its background processes and then running a targeted refresh. The key is that the Snap Store often runs silently in the background, so you must terminate it before updating.
+
+## 1. Stop All Snap Store Processes
+
+The Snap Store frequently runs in the background even when the window is closed. You must terminate it first.
+
+### Option A — Cleanest Method
+
+\`\`\`bash
+snap-store --quit
+\`\`\`
+
+If this works, proceed to the update step.
+
+### Option B — Force-Kill the Process
+
+If the above command reports that Snap Store is still running:
+
+\`\`\`bash
+pkill snap-store
+\`\`\`
+
+Or identify the exact process:
+
+\`\`\`bash
+ps aux | grep snap-store
+\`\`\`
+
+Then kill it by PID:
+
+\`\`\`bash
+sudo kill <process_id>
+\`\`\`
+
+## 2. Refresh the Snap Store Manually
+
+Once all Snap Store processes are stopped:
+
+\`\`\`bash
+sudo snap refresh snap-store
+\`\`\`
+
+This forces an immediate update of only the Snap Store snap.
+
+## 3. (Optional) Update All Snaps
+
+If you want to update everything at once:
+
+\`\`\`bash
+sudo snap refresh
+\`\`\`
+
+## 📌 Quick Troubleshooting Tips
+
+- If \`snap-store --quit\` does nothing, use \`pkill snap-store\`
+- If \`snap refresh snap-store\` still complains about running apps, check for other snap processes:
+
+\`\`\`bash
+ps -ef | grep snap
+\`\`\`
+
+Then kill the listed PIDs.
+
+- After updating, the Snap Store may restart automatically.`
+  },
+  {
     id: "docker-compose-plugin-fix",
     title: 'How to Fix "Unable to Locate Package docker-compose-plugin" on Linux PC (Debian)',
     slug: "fix-unable-to-locate-docker-compose-plugin-linux-debian",
@@ -1484,7 +1564,7 @@ export const CATEGORIES = [
   { name: "All", count: BLOG_POSTS.length },
   { name: "Blockchain", count: BLOG_POSTS.filter(p => p.category === "Blockchain").length },
   { name: "Security", count: BLOG_POSTS.filter(p => p.category === "Security").length },
-  { name: "Linux", count: BLOG_POSTS.filter(p => p.category === "Linux").length },
+  { name: "Linux", count: BLOG_POSTS.filter((p) => p.category === "Linux").length },
   { name: "Privacy", count: BLOG_POSTS.filter(p => p.category === "Privacy").length },
   { name: "Software", count: BLOG_POSTS.filter(p => p.category === "Software").length },
 ];
