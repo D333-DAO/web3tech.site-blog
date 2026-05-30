@@ -1,5 +1,110 @@
 export const BLOG_POSTS = [
   {
+    id: "diskpart-full-wipe-partition-format",
+    title: "Full Wipe → Partition → Format → Ready-to-Use (DiskPart Script)",
+    slug: "diskpart-full-wipe-partition-format-script",
+    excerpt: "The cleanest, safest, and most correct DiskPart sequence for preparing any drive on Windows. Includes full wipe, GPT initialization, partition creation, and NTFS formatting.",
+    date: "2026-05-30",
+    author: "Derrk Samuel",
+    category: "Software",
+    tags: ["DiskPart", "Windows", "Disk Management", "Formatting", "Partition", "Command Line"],
+    readTime: "4 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/3e90fcf71_generated_6266866e.png",
+    featured: false,
+    content: `## Full Wipe → Partition → Format → Ready-to-Use (DiskPart Script)
+
+This is the cleanest, safest, and most correct sequence for preparing any drive on Windows.
+
+It performs:
+
+1. Full wipe (partition table removed)
+2. GPT initialization (modern standard)
+3. Primary partition creation
+4. NTFS quick format
+5. Drive letter assignment
+
+## 🧨 ⚠️ WARNING — This Erases the Entire Disk
+
+Double-check the disk number using \`list disk\` before running this.
+
+**DiskPart does not ask for confirmation.**
+
+## 🧱 DiskPart Command Sequence (Copy/Paste Ready)
+
+\`\`\`bash
+diskpart
+list disk
+select disk X
+clean
+convert gpt
+create partition primary
+format fs=ntfs label="NewDisk" quick
+assign letter=Z
+exit
+\`\`\`
+
+Replace \`X\` with the correct disk number.
+
+## 🧩 What Each Step Does
+
+### \`clean\`
+Removes all partitions and volume info. Fast and effective for most cases.
+
+### \`clean all\` (Optional)
+Writes zeros to every sector. Use only if you need a forensic-level wipe (much slower).
+
+### \`convert gpt\`
+Sets the disk to GPT — required for modern UEFI systems and drives larger than 2TB.
+
+### \`create partition primary\`
+Creates a single, full-size primary partition.
+
+### \`format fs=ntfs quick\`
+Formats the new partition with NTFS.
+
+You can swap NTFS for:
+- \`fat32\` (for compatibility)
+- \`exfat\` (for large removable drives)
+
+### \`assign letter=Z\`
+Mounts the new volume as drive Z:. Change the letter to whatever you want.
+
+## 🧪 Optional Enhancements
+
+### Create a Specific-Size Partition
+\`\`\`bash
+create partition primary size=50000
+\`\`\`
+(creates a 50GB partition)
+
+### Create Multiple Partitions
+\`\`\`bash
+create partition primary size=100000
+create partition primary
+\`\`\`
+(creates 2 primary partitions on the disk)
+
+### Format as exFAT
+\`\`\`bash
+format fs=exfat quick
+\`\`\`
+
+### Make It Bootable (Windows Install Media)
+\`\`\`bash
+active
+\`\`\`
+(Only works on MBR disks)
+
+## Key Points
+
+- **Always verify the disk number** with \`list disk\` before proceeding
+- \`clean\` is fast; \`clean all\` is secure but slow
+- GPT is the modern standard for UEFI systems
+- NTFS is the default for Windows; use exFAT for cross-platform compatibility
+- This sequence leaves you with a clean, ready-to-use drive`
+  },
+  {
     id: "install-google-chrome-ubuntu-desktop",
     title: "How to Install Google Chrome on Ubuntu Desktop — Quick & Easy Methods",
     slug: "install-google-chrome-ubuntu-desktop-quick-guide",
