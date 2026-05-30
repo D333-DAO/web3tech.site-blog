@@ -1,5 +1,87 @@
 export const BLOG_POSTS = [
   {
+    id: "install-google-chrome-ubuntu-desktop",
+    title: "How to Install Google Chrome on Ubuntu Desktop — Quick & Easy Methods",
+    slug: "install-google-chrome-ubuntu-desktop-quick-guide",
+    excerpt: "The quickest, cleanest way to install Google Chrome on Ubuntu Desktop using either the terminal or GUI. Works on Ubuntu 22.04, 24.04, and newer.",
+    date: "2026-05-30",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Chrome", "Ubuntu", "Linux", "Installation", "Browser", "Package Manager"],
+    readTime: "2 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/9dfb627de_generated_image.png",
+    featured: false,
+    content: `## Overview
+
+Here's the quickest, cleanest way to install Google Chrome on Ubuntu Desktop, using either the terminal or the GUI. Both methods work on Ubuntu 22.04, 24.04, and newer.
+
+## 🧩 Method 1 — Install Chrome via Terminal (Fastest)
+
+### 1. Download the Chrome .deb Package
+
+\`\`\`bash
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+\`\`\`
+
+### 2. Install It with APT
+
+\`\`\`bash
+sudo apt install ./google-chrome-stable_current_amd64.deb
+\`\`\`
+
+This automatically installs dependencies and adds Google's repo so Chrome updates with the system.
+
+### 3. Launch Chrome
+
+\`\`\`bash
+google-chrome
+\`\`\`
+
+## 🖱️ Method 2 — Install Chrome via GUI (Beginner-Friendly)
+
+1. Open **Firefox** (preinstalled on Ubuntu)
+2. Go to the [official Chrome download page](https://www.google.com/chrome/)
+3. Choose **64-bit .deb (For Debian/Ubuntu)** → Accept and Install
+4. Once downloaded, open the .deb file from Downloads
+5. Ubuntu Software Center will open → click **Install**
+6. Launch Chrome from the Applications menu
+
+## 🔧 Optional — Add Google's APT Repository Manually
+
+Useful if you want to install via \`apt install google-chrome-stable\` directly.
+
+### 1. Update Packages
+
+\`\`\`bash
+sudo apt update
+\`\`\`
+
+### 2. Install Dependencies
+
+\`\`\`bash
+sudo apt install ca-certificates curl -y
+\`\`\`
+
+### 3. Add Google's Signing Key & Repo
+
+For Ubuntu 22.04+:
+
+\`\`\`bash
+curl https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+
+sudo apt update
+
+sudo apt install google-chrome-stable
+\`\`\`
+
+## 🚀 You're Ready
+
+Once installed, Chrome will appear in your app launcher and update automatically with the rest of your system.`
+  },
+  {
     id: "alison-free-online-courses-platform",
     title: "Alison.com: The Complete Guide to Free Online Learning and Professional Development",
     slug: "alison-free-online-courses-professional-development-guide",
