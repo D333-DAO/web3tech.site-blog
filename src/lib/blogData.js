@@ -1055,6 +1055,181 @@ docker run -d \\
 External drives must be mounted before the app starts.`
   },
   {
+    id: "rufus-access-denied-iso-extraction-fix",
+    title: "Rufus 'Access to the Drive is Denied' & 'ISO Image Extraction Failure' — Complete Fix Guide",
+    slug: "rufus-access-denied-iso-extraction-failure-fix",
+    excerpt: "Fix Rufus errors 'Access to the drive is denied' and 'ISO image extraction failure' with this power-user breakdown — covering write protection, dynamic disks, corrupted ISOs, and the UUP Dump method for clean Windows-to-Go creation.",
+    date: "2026-05-30",
+    author: "Derrk Samuel",
+    category: "Software",
+    tags: ["Rufus", "Windows", "ISO", "USB", "Windows-to-Go", "Troubleshooting", "DiskPart"],
+    readTime: "12 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/3e90fcf71_generated_6266866e.png",
+    featured: false,
+    content: `## "Access to the Drive is Denied" in Rufus
+
+This error almost always comes from one of these specific causes — and every single one is fixable.
+
+## 🔍 Why Rufus Says "Access to the Drive is Denied"
+
+### 1. The SSD is Mounted or In Use by Windows
+Windows may have:
+- Assigned it a drive letter
+- Auto-mounted a partition
+- Open file handles on it
+- Indexing or antivirus scanning it
+
+Rufus can't take exclusive control → denied.
+
+### 2. The SSD is Write-Protected
+This can happen if:
+- The disk has a read-only attribute
+- The controller is in a locked state
+- The disk is flagged as "dirty"
+
+### 3. You're Not Running Rufus as Administrator
+Even if you think you are, Windows sometimes blocks raw-disk access unless explicitly elevated.
+
+### 4. The SSD is Formatted as a Dynamic Disk
+Rufus cannot write to dynamic disks.
+
+### 5. Another Program is Holding the Disk
+Common culprits: File Explorer, partition managers, backup software, BitLocker, Steam/OneDrive indexing, or the Windows "Safely Remove Hardware" bug.
+
+## 🛠️ Fix It Step-by-Step
+
+### ✅ Step 1 — Close Everything That Might Touch the Drive
+Close: File Explorer windows, Disk Management, any partitioning tools, antivirus popups, and backup/sync apps. Then unplug → replug the SSD.
+
+### ✅ Step 2 — Run Rufus as Administrator
+Right-click → **Run as administrator**. This alone fixes the issue for a lot of people.
+
+### ✅ Step 3 — Remove Read-Only Flags (DiskPart)
+Open Command Prompt (Admin) and run:
+
+\`\`\`bash
+diskpart
+list disk
+select disk X
+attributes disk clear readonly
+clean
+exit
+\`\`\`
+
+Replace \`X\` with your SSD's disk number.
+
+> ⚠️ This will wipe the drive completely — which is what you want for Windows-to-Go anyway.
+
+### ✅ Step 4 — Make Sure the Disk is NOT Dynamic
+In Disk Management: if the SSD says **Dynamic**, Rufus will refuse it. Convert it to Basic (requires deleting volumes).
+
+### ✅ Step 5 — Disable Windows Auto-Mount (Optional but Powerful)
+If Windows keeps grabbing the drive:
+
+\`\`\`bash
+diskpart
+automount disable
+exit
+\`\`\`
+
+Re-enable later with:
+
+\`\`\`bash
+diskpart
+automount enable
+\`\`\`
+
+### ✅ Step 6 — Try a Different USB Port
+Avoid USB hubs and front-panel ports. Prefer USB 3.0/3.2 ports directly on the motherboard.
+
+---
+
+## "ISO Image Extraction Failure" in Rufus
+
+This error means Rufus couldn't read or unpack something inside the ISO — not that your SSD is the problem.
+
+## 🔍 Why Rufus Throws "ISO Image Extraction Failure"
+
+### 1. The ISO File is Corrupted or Incomplete
+This is the #1 cause. The download didn't finish cleanly, the ISO was modified or repacked, or it came from a third-party mirror. Windows ISOs are huge — even a tiny corruption breaks extraction.
+
+### 2. The ISO is Locked by Another Program
+Common culprits: antivirus scanning the ISO, File Explorer previewing it, cloud sync (OneDrive/Google Drive) still uploading it, or a torrent client still seeding it.
+
+### 3. The ISO Contains install.esd Instead of install.wim
+Some Windows ISOs (especially Insider builds) use \`install.esd\`, which is more compressed. Rufus can handle it, but extraction sometimes fails if the ESD is heavily compressed or the ISO uses a non-standard structure.
+
+### 4. The ISO is a Custom/Lite Build
+Some "lite," "tiny," or "custom" Windows builds break Rufus extraction entirely.
+
+### 5. The ISO is on a Failing or Slow Drive
+If the ISO is stored on a USB stick, failing HDD, or network share, Rufus may time out during extraction.
+
+## 🛠️ Fix It Fast
+
+### ✅ Step 1 — Move the ISO to Your Internal SSD
+Put it somewhere like \`C:\\ISO\\\`. Rufus reads ISOs much more reliably from an internal NVMe/SATA drive.
+
+### ✅ Step 2 — Verify the ISO is Legit
+If you downloaded a Windows ISO from anywhere except Microsoft, redownload it from the official [Windows download page](https://www.microsoft.com/software-download/windows11).
+
+### ✅ Step 3 — Rename the ISO to Something Simple
+Avoid long paths or special characters. Example: \`Win11.iso\`
+
+### ✅ Step 4 — Disable Antivirus Temporarily
+Especially Windows Defender real-time protection and third-party AV (Avast, Bitdefender, etc.) — they often lock the ISO mid-extraction.
+
+### ✅ Step 5 — Try Rufus Portable Instead of Installed
+Download Rufus Portable and run it as admin. Sometimes the installed version gets blocked by Windows.
+
+---
+
+## Windows 11 Insider Build 22621 — Known Issue
+
+Build 22621 ISOs are notorious for causing "ISO image extraction failure" in Rufus when creating Windows-to-Go. The reason:
+
+- Contains \`install.esd\` instead of \`install.wim\`
+- Uses high compression that Rufus sometimes fails to unpack
+- Produces partial or corrupted downloads from the Insider page
+- Fails extraction **only** during Windows-to-Go creation (normal USB installers work fine)
+
+### Check if Your ISO Contains install.esd
+Right-click → Mount the ISO → open the \`sources\` folder.
+
+If you see \`install.esd\` instead of \`install.wim\`, Rufus is much more likely to fail during Windows-to-Go creation.
+
+### Check File Size
+Windows 11 ISOs should be around **5.1–5.4 GB**. If yours is smaller, it's incomplete.
+
+---
+
+## 🚀 The Fix That Works: Build a Clean ISO Using UUP Dump
+
+UUP Dump generates a clean, uncorrupted ISO with a proper \`install.wim\` that Rufus handles perfectly. This avoids all Insider ISO issues.
+
+### Exact Steps for Windows 11 Pro for Workstations (Build 22621)
+
+1. Go to **[https://uupdump.net](https://uupdump.net)**
+2. Search: \`22621\`
+3. Choose: **Windows 11, version 22H2 (22621.xxx)**
+4. Architecture: **x64**
+5. Language: **English (United States)**
+6. Edition: **Windows 11 Pro for Workstations**
+7. Download method: **Download and convert to ISO** (integrate updates recommended)
+
+This generates a script that downloads UUP files directly from Microsoft's servers and builds a clean ISO locally.
+
+### Why This Works
+
+UUP Dump pulls raw update packages from Microsoft's servers and builds the ISO on your machine. This avoids:
+- ISO image extraction failure
+- Corrupted \`install.esd\`
+- Broken Windows-to-Go creation
+
+UUP Dump ISOs always include a proper \`install.wim\`, which Rufus handles flawlessly.`
+  },
+  {
     id: "manually-update-snap-store-ubuntu",
     title: "Step-by-Step: Manually Update the Snap Store in Ubuntu Desktop 20.04.6",
     slug: "manually-update-snap-store-ubuntu-20-04",
