@@ -1,5 +1,110 @@
 export const BLOG_POSTS_2 = [
   {
+    id: "kaspa-stratum-bridge-docker-env-vars",
+    title: "Kaspa Stratum Bridge Docker Environment Variables — Complete Guide",
+    slug: "kaspa-stratum-bridge-docker-environment-variables",
+    excerpt: "The definitive list of all environment variables for running the Kaspa Stratum Bridge inside Docker. Map config.yaml fields directly to Docker env vars — no config file needed.",
+    date: "2026-05-31",
+    author: "Derrk Samuel",
+    category: "Blockchain",
+    tags: ["Kaspa", "Stratum Bridge", "Docker", "Mining", "Environment Variables", "Configuration"],
+    readTime: "5 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/241ccc70a_generated_image.png",
+    featured: false,
+    content: `## Kaspa Stratum Bridge — All Supported Docker Environment Variables
+
+Below is the definitive list of environment variables you can use to run the Kaspa Stratum Bridge inside Docker Desktop, based directly on the official repo's configuration system and Docker deployment docs.
+
+These variables map 1:1 to the fields normally found in \`config.yaml\`, so you can run the bridge without a config file if you prefer.
+
+The bridge accepts environment variables that override the YAML config. They follow this pattern:
+
+\`\`\`
+KSB<UPPERCASEFIELD_NAME>
+\`\`\`
+
+## 🧱 Core Required Variables
+
+| Variable | Purpose | Example |
+|----------|---------|---------|
+| KSBKASPADADDRESS | RPC endpoint of your kaspad node | \`192.168.1.10:16110\` |
+| KSBMININGADDRESS | Your Kaspa payout address | \`kaspa:qq...\` |
+| KSBSTRATUMPORT | Port miners connect to | \`5555\` |
+
+## 🔧 Optional but Common Variables
+
+| Variable | Purpose | Example |
+|----------|---------|---------|
+| KSBLOGLEVEL | info, debug, warn, error | \`info\` |
+| KSBMINSHAREDIFF | Minimum share difficulty | \`1\` |
+| KSBMAXSHAREDIFF | Max difficulty (ASIC tuning) | \`512\` |
+| KSBCLIENTTIMEOUT | Disconnect idle miners | \`30s\` |
+| KSBWORKERNAMEMODE | Append worker names | \`append\` |
+
+## 📊 Monitoring / Metrics Variables
+
+| Variable | Purpose | Example |
+|----------|---------|---------|
+| KSBMETRICSENABLED | Enable Prometheus metrics | \`true\` |
+| KSBMETRICSPORT | Metrics port | \`2112\` |
+
+## 🐳 Docker Desktop Example (No config.yaml needed)
+
+Here is a ready-to-run Docker Compose setup:
+
+\`\`\`yaml
+version: "3.8"
+
+services:
+  kaspa-stratum-bridge:
+    image: onemorebsmith/kaspa-stratum-bridge:latest
+    container_name: kaspa-stratum-bridge
+    restart: unless-stopped
+    ports:
+      - "5555:5555"   # Stratum port
+      - "2112:2112"   # Metrics (optional)
+    environment:
+      - KSBKASPADADDRESS=192.168.1.10:16110
+      - KSBMININGADDRESS=kaspa:qqyouraddresshere
+      - KSBSTRATUMPORT=5555
+      - KSBLOGLEVEL=info
+      - KSBMINSHAREDIFF=1
+      - KSBMETRICSENABLED=true
+      - KSBMETRICSPORT=2112
+\`\`\`
+
+Run it:
+
+\`\`\`bash
+docker compose up -d
+\`\`\`
+
+## 🧪 Testing Your Bridge
+
+Point your miner to:
+
+\`\`\`
+stratum+tcp://<your-docker-host-ip>:5555
+\`\`\`
+
+On Docker Desktop (Windows/macOS), that's usually:
+
+\`\`\`
+stratum+tcp://host.docker.internal:5555
+\`\`\`
+
+## Key Points
+
+- **No config.yaml required** — Environment variables override all YAML settings
+- **Variable naming** — All variables start with \`KSB\` followed by the config field name in UPPERCASE
+- **Docker Compose** — Use the \`environment:\` section to pass variables to your container
+- **Metrics** — Enable Prometheus metrics if you want to monitor bridge performance
+- **Difficulty** — Adjust \`KSBMINSHAREDIFF\` and \`KSBMAXSHAREDIFF\` based on your miner hardware
+
+This gives you a completely containerized, environment-driven Kaspa Stratum Bridge setup with zero config file management.`
+  },
+  {
     id: "docker-compose-plugin-fix",
     title: 'How to Fix "Unable to Locate Package docker-compose-plugin" on Linux PC (Debian)',
     slug: "fix-unable-to-locate-docker-compose-plugin-linux-debian",
