@@ -1,5 +1,102 @@
 export const BLOG_POSTS_2 = [
   {
+    id: "hidden-cybersecurity-toolkit-5-resources",
+    title: "The Hidden Toolkit: 5 Cybersecurity Resources the Pros Keep Quiet About",
+    slug: "hidden-cybersecurity-toolkit-5-resources-pros",
+    excerpt: "Beyond antivirus—discover the five lesser-known tools and platforms security experts use to stay ahead of threats. From Shodan to Fiddler, level up your digital defense.",
+    date: "2026-05-31",
+    author: "Derrk Samuel",
+    category: "Security",
+    tags: ["Cybersecurity", "Security Tools", "VirusTotal", "Shodan", "CyberChef", "Fiddler", "OSINT"],
+    readTime: "7 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/c77c43057_generated_92c1ff70.png",
+    featured: true,
+    content: `## The Hidden Toolkit: 5 Cybersecurity Resources the Pros Keep Quiet About
+
+In a world where data breaches are the new normal, relying on basic antivirus software is like bringing a toothpick to a sword fight. While everyone knows the big names in security, the real power players use a specialized "shadow" toolkit to stay ahead of threats.
+
+If you're looking to level up your digital defense, these five lesser-known tools and websites are essential for your bookmarks.
+
+## 1. Shodan: The Search Engine for Everything Else
+
+Most people use Google to find websites. Security experts use Shodan to find everything else. From webcams and routers to power plant control systems, Shodan crawls the "Internet of Things" (IoT). It's an invaluable tool for seeing what devices on your network are accidentally exposed to the public web.
+
+**Use cases:**
+- Discover exposed devices on your network
+- Audit IoT infrastructure for vulnerabilities
+- Understand what attackers can see from the outside
+- Identify unprotected databases and control systems
+
+**Website:** [shodan.io](https://www.shodan.io)
+
+## 2. CyberChef: The "Swiss Army Knife" of Data
+
+Created by the GCHQ (the UK's intelligence agency), CyberChef is a simple, intuitive web app for carrying out all manner of "cyber" operations within a browser. Whether you need to decode Base64, convert hex to strings, or decrypt AES data, CyberChef lets you chain "recipes" together to process complex data instantly.
+
+**Common operations:**
+- Decode/encode Base64, hex, ASCII
+- Decrypt data (AES, DES, RSA)
+- Hash analysis and generation
+- Regular expression testing
+- Data format conversions
+
+**Website:** [gchq.github.io/CyberChef](https://gchq.github.io/CyberChef)
+
+## 3. VirusTotal: Beyond Your Local Scanner
+
+Your desktop antivirus might miss a brand-new threat. VirusTotal allows you to upload suspicious files or URLs to be analyzed by over 70 different antivirus scanners and URL/domain blacklisting services simultaneously. It provides a massive, community-driven perspective on whether a file is truly safe.
+
+**Key features:**
+- Multi-scanner file analysis
+- URL/domain reputation checking
+- Graph view of malware relationships
+- Community-driven threat intelligence
+- API access for automated scanning
+
+**Website:** [virustotal.com](https://www.virustotal.com)
+
+## 4. Have I Been Pwned?: The Domain Search
+
+While many know this site for checking personal emails, their **Domain Search** tool is a hidden gem for small business owners and IT admins. It allows you to track every email address associated with your domain and receive alerts the second any employee's credentials appear in a new data breach.
+
+**Key features:**
+- Monitor all email addresses on your domain
+- Real-time breach alerts
+- Exposed password history
+- Third-party compromise detection
+- Essential for business account security
+
+**Website:** [haveibeenpwned.com](https://www.haveibeenpwned.com)
+
+## 5. Telerik Fiddler: The Traffic Decoder
+
+Ever wonder exactly what data your apps are sending back to their servers? Fiddler is a free web debugging proxy which logs all HTTP(S) traffic between your computer and the Internet. It's perfect for "man-in-the-middle" testing to ensure your software isn't leaking private information through unencrypted channels.
+
+**Use cases:**
+- Monitor app-to-server communication
+- Detect data leaks
+- Test API endpoints
+- Intercept and modify requests
+- Audit encryption in transit
+- Verify secure connections
+
+**Website:** [telerik.com/fiddler](https://www.telerik.com/fiddler)
+
+## The Bottom Line
+
+Security isn't about one single wall—it's about having the right visibility. By integrating these tools into your routine, you move from passive protection to active defense.
+
+**Start with:**
+1. **Shodan** to audit your network exposure
+2. **CyberChef** for day-to-day data operations
+3. **VirusTotal** as your second-opinion scanner
+4. **Have I Been Pwned** to protect your domain
+5. **Fiddler** to understand what your apps are doing
+
+Which tool is going into your toolkit first?`
+  },
+  {
     id: "purpose-software-computer-architecture",
     title: "Purpose of Software in Computer Architecture — Control, Abstraction, and Intelligence",
     slug: "purpose-software-computer-architecture-design",
