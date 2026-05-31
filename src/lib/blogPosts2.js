@@ -1,5 +1,130 @@
 export const BLOG_POSTS_2 = [
   {
+    id: "manual-partitioning-ubuntu-20-04",
+    title: "Manual Partitioning in Ubuntu 20.04 — Complete UEFI + GPT Setup Guide",
+    slug: "manual-partitioning-ubuntu-20-04-uefi-gpt-guide",
+    excerpt: "Step-by-step guide to manual partitioning during Ubuntu 20.04 installation. Covers UEFI + GPT layout, EFI System Partition, swap, root, and home partitions with recommended sizes.",
+    date: "2026-05-31",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Ubuntu", "Partitioning", "Linux", "UEFI", "GPT", "Installation", "Disk Management"],
+    readTime: "6 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/9dfb627de_generated_image.png",
+    featured: false,
+    content: `## Manual Partitioning in Ubuntu 20.04 (Step-by-Step)
+
+### 🟦 Step 1 — Start the Installer
+
+1. Boot from your Ubuntu 20.04 USB
+2. Choose **Install Ubuntu**
+3. Continue until you reach **Installation type**
+4. Select **Something else** → this opens the full partition editor
+
+### 🟧 Step 2 — Create or Select a Partition Table
+
+If the disk is new or you want a clean layout:
+
+1. Select the disk (e.g., \`/dev/sda\`)
+2. Click **New Partition Table**
+3. Confirm (this wipes the disk)
+
+**UEFI systems** → GPT is recommended
+
+**Legacy BIOS systems** → MBR works, but GPT still preferred
+
+### 🟩 Step 3 — Create Required Partitions (UEFI Layout)
+
+Ubuntu 20.04 works perfectly with the modern UEFI + GPT scheme.
+
+#### 🟨 Partition 1 — EFI System Partition (ESP)
+
+Required for UEFI boot.
+
+| Setting | Value |
+|---------|-------|
+| Size | 300–512 MB |
+| Type | FAT32 |
+| Use as | EFI System Partition |
+| Mount point | /boot/efi |
+
+> If Windows is installed → reuse the existing EFI partition.
+
+#### 🟦 Partition 2 — Swap (Optional)
+
+Ubuntu 20.04 uses a swap file by default, but manual partitioning allows a dedicated swap partition.
+
+**Recommended Swap by RAM:**
+
+| RAM | Recommended Swap |
+|-----|------------------|
+| 8–16 GB | 2–4 GB |
+| 16–32 GB | 2 GB |
+| Hibernation | RAM size |
+
+| Setting | Value |
+|---------|-------|
+| Type | Linux swap |
+
+#### 🟥 Partition 3 — Root (/)
+
+This is the main system partition.
+
+| Setting | Value |
+|---------|-------|
+| Size | 25–50 GB minimum |
+| Type | ext4 |
+| Mount point | / |
+
+#### 🟩 Partition 4 — Home (/home) (Optional)
+
+Keeps your personal files separate from the OS.
+
+| Setting | Value |
+|---------|-------|
+| Size | Remaining space |
+| Type | ext4 |
+| Mount point | /home |
+
+### 🟦 Step 4 — Set Bootloader Location
+
+At the bottom of the partition editor:
+
+**Install bootloader to:** \`/dev/sdX\` (the disk, not a partition)
+
+**Examples:**
+- ✔ \`/dev/sda\`
+- ✘ \`/dev/sda1\`
+
+### 🟪 Step 5 — Apply Changes
+
+1. Click **Install Now**
+2. Review the summary
+3. Confirm
+
+Ubuntu will format the partitions and begin installation.
+
+## 🟣 Recommended Layout Summary (UEFI + GPT)
+
+| Partition | Size | Filesystem | Mount Point | Notes |
+|-----------|------|-----------|-------------|-------|
+| EFI | 300–512 MB | FAT32 | /boot/efi | Required |
+| Swap | 2–4 GB | swap | — | Optional |
+| Root | 25–50 GB+ | ext4 | / | Required |
+| Home | Rest of disk | ext4 | /home | Optional |
+
+## Key Points
+
+- **EFI System Partition** must use FAT32 and be marked as "EFI System Partition"
+- **Bootloader location** must be the disk itself (e.g., /dev/sda), not a partition
+- **Separate /home** keeps personal files isolated from OS updates
+- **Swap partition** is optional if you have 16GB+ RAM
+- **ext4** is the standard, stable filesystem for Ubuntu
+- **GPT** is future-proof and required for UEFI systems
+
+This layout gives you a clean, modern, maintainable Ubuntu 20.04 installation with proper separation of system and user data.`
+  },
+  {
     id: "kaspa-stratum-bridge-docker-env-vars",
     title: "Kaspa Stratum Bridge Docker Environment Variables — Complete Guide",
     slug: "kaspa-stratum-bridge-docker-environment-variables",
