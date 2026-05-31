@@ -8,7 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import BlogLayout from '@/components/blog/Layout';
 import Home from '@/pages/Home';
 import Blog from '@/pages/Blog';
-import BlogPost from '@/pages/BlogPost';
+import BlogPost from '@/pages/BlogPost.jsx';
 import About from '@/pages/About';
 
 const AuthenticatedApp = () => {
