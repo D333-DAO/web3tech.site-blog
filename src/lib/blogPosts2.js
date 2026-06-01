@@ -1,5 +1,98 @@
 export const BLOG_POSTS_2 = [
   {
+    id: "kali-linux-vnc-password-reset-guide",
+    title: "How to Find or Reset Your VNC Password on Kali Linux (Windows, WSL & VM)",
+    slug: "kali-linux-vnc-password-reset-windows-wsl-vm",
+    excerpt: "A professional guide to locating, setting, and resetting VNC passwords on Kali Linux — covering standard installations, virtual machines, and Win-KeX on WSL.",
+    date: "2026-06-01",
+    author: "Derrk Samuel",
+    category: "Security",
+    tags: ["Kali Linux", "VNC", "WSL", "Windows", "Linux", "Remote Desktop", "Security"],
+    readTime: "5 min",
+    source: "techderksinsights",
+    image: "https://media.base44.com/images/public/6a112c3e2737801908a7c002/c77c43057_generated_92c1ff70.png",
+    featured: false,
+    content: `## Overview
+
+To find or reset the VNC password for Kali Linux, you will use the \`vncpasswd\` command directly from the Kali terminal. If no password has been configured previously, this command will guide you through creating one. For pre-configured environments, the password is typically established during the initial VNC server installation.
+
+VNC passwords are obfuscated within a binary file, making them unreadable as plain text. The recommended approach is to reset the password rather than attempt to retrieve it.
+
+## 1. Default Credentials
+
+If you are working with a fresh Kali Linux installation or a pre-built image (such as those distributed by Offensive Security), the default system credentials are:
+
+- **Username:** \`kali\`
+- **Password:** \`kali\`
+
+> **Note:** Default credentials should be changed immediately in any production or security-sensitive environment. Always configure a unique VNC password using the method outlined below.
+
+## 2. Resetting the VNC Password
+
+Follow these steps to set or update your VNC password from within the Kali terminal:
+
+**Step 1 — Open a terminal in Kali Linux**
+
+**Step 2 — Run the VNC password command:**
+
+\`\`\`bash
+vncpasswd
+\`\`\`
+
+**Step 3 — Follow the prompts** to enter and confirm your new password.
+
+This command updates the obfuscated password file used by the VNC server on subsequent connections.
+
+**Step 4 — Verify active VNC sessions (optional):**
+
+\`\`\`bash
+vncserver -list
+\`\`\`
+
+This displays any currently running VNC sessions and their associated display numbers.
+
+## 3. Password File Locations
+
+VNC passwords are stored in hidden directories within the user's home folder. The exact location depends on the VNC implementation in use:
+
+| VNC Implementation | Password File Path |
+|---|---|
+| Standard VNC | \`~/.vnc/passwd\` |
+| TigerVNC | \`~/.config/tigervnc/passwd\` |
+| Win-KeX (WSL) | Managed via \`kex --passwd\` |
+
+All VNC configuration files and session data are typically located under \`~/.vnc/\`.
+
+## 4. Special Case: Win-KeX on WSL
+
+If you are running Kali Linux on Windows via the Windows Subsystem for Linux (WSL) and using Win-KeX, standard \`vncpasswd\` may not apply. Use the following Win-KeX–specific commands instead:
+
+**Set or change the Win-KeX VNC password:**
+
+\`\`\`bash
+kex --passwd
+\`\`\`
+
+**Start a Win-KeX session (prompts for password if not yet configured):**
+
+\`\`\`bash
+kex --win
+\`\`\`
+
+Win-KeX manages its own password store independently from the standard VNC password file, so changes made with \`vncpasswd\` will not affect Win-KeX sessions and vice versa.
+
+## Summary
+
+| Scenario | Command |
+|---|---|
+| Standard VNC (all setups) | \`vncpasswd\` |
+| Check active sessions | \`vncserver -list\` |
+| Win-KeX password (WSL) | \`kex --passwd\` |
+| Start Win-KeX session | \`kex --win\` |
+
+Using \`vncpasswd\` is the simplest and most reliable method for managing VNC credentials across standard Kali Linux installations, virtual machines, and remote server deployments.`
+  },
+  {
     id: "hidden-cybersecurity-toolkit-5-resources",
     title: "The Hidden Toolkit: 5 Cybersecurity Resources the Pros Keep Quiet About",
     slug: "hidden-cybersecurity-toolkit-5-resources-pros",
