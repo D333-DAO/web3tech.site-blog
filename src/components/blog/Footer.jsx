@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Terminal, ExternalLink } from "lucide-react";
+import { Terminal, ExternalLink, Rss } from "lucide-react";
 import { AUTHOR } from "@/lib/blogData";
+
+const RSS_URL = "https://blog.theweb3tech.com/api/rssFeed";
 
 export default function Footer() {
   return (
@@ -30,6 +32,15 @@ export default function Footer() {
               <Link to="/" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Home</Link>
               <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
               <Link to="/about" className="block text-sm text-muted-foreground hover:text-primary transition-colors">About</Link>
+              <a
+                href={RSS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Rss className="w-3 h-3 text-orange-400" />
+                RSS Feed
+              </a>
             </div>
           </div>
 
