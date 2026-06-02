@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Terminal, Search } from "lucide-react";
+import { Menu, X, Terminal, Search, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SearchOverlay from "@/components/blog/SearchOverlay";
+import { useTheme } from "@/hooks/useTheme";
 
 const NAV_LINKS = [
   { label: "Home", path: "/" },
@@ -14,6 +15,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const handler = (e) => {
@@ -65,10 +67,23 @@ export default function Navbar() {
               <span className="text-xs">Search</span>
               <kbd className="hidden lg:inline text-[10px] px-1.5 py-0.5 bg-background rounded border border-border/50">⌘K</kbd>
             </button>
+            <button
+              onClick={toggle}
+              title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              className="ml-1 p-2 rounded-lg border border-border/50 bg-secondary/50 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
           </div>
 
           {/* Mobile toggle + search */}
           <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggle}
+              className="p-2 text-muted-foreground hover:text-foreground"
+            >
+              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
             <button
               onClick={() => setSearchOpen(true)}
               className="p-2 text-muted-foreground hover:text-foreground"
