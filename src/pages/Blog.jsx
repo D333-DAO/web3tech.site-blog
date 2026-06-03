@@ -3,20 +3,26 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import BlogCard from "@/components/blog/BlogCard";
 import CategoryFilter from "@/components/blog/CategoryFilter";
+import TagCloud from "@/components/blog/TagCloud";
 import { BLOG_POSTS } from "@/lib/blogData";
 import { motion } from "framer-motion";
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeTag, setActiveTag] = useState(null);
 
   const filteredPosts = useMemo(() => {
     let posts = [...BLOG_POSTS].sort((a, b) => new Date(b.date) - new Date(a.date));
-    
+
     if (activeCategory !== "All") {
       posts = posts.filter((p) => p.category === activeCategory);
     }
-    
+
+    if (activeTag) {
+      posts = posts.filter((p) => p.tags?.includes(activeTag));
+    }
+
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       posts = posts.filter(
@@ -26,9 +32,9 @@ export default function Blog() {
           p.tags.some((t) => t.toLowerCase().includes(q))
       );
     }
-    
+
     return posts;
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, activeTag]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
@@ -45,7 +51,7 @@ export default function Blog() {
       </motion.div>
 
       {/* Search + Filters */}
-      <div className="space-y-4 mb-10">
+      <div className="space-y-4 mb-8">
         <div className="relative max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
@@ -55,14 +61,26 @@ export default function Blog() {
             className="pl-10 bg-secondary border-border"
           />
         </div>
-        <CategoryFilter activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+        <CategoryFilter activeCategory={activeCategory} onCategoryChange={(cat) => { setActiveCategory(cat); setActiveTag(null); }} />
       </div>
+
+      {/* Tag Cloud */}
+      <div className="mb-10">
+        <TagCloud activeTag={activeTag} onTagClick={setActiveTag} />
+      </div>
+
+      {/* Active tag indicator */}
+      {activeTag && (
+        <p className="text-sm text-muted-foreground mb-4">
+          Showing articles tagged <span className="text-primary font-medium">#{activeTag}</span>
+        </p>
+      )}
 
       {/* Posts grid */}
       {filteredPosts.length > 0 ? (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPosts.map((post, i) => (
-            <BlogCard key={post.id} post={post} index={i} />
+            <BlogCard key={post.id} post={post} index={i} onTagClick={setActiveTag} />
           ))}
         </div>
       ) : (

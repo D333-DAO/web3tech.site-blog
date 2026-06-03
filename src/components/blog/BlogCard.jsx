@@ -13,7 +13,7 @@ const categoryColors = {
   Software: "bg-chart-4/10 text-chart-4 border-chart-4/20",
 };
 
-export default function BlogCard({ post, index = 0, variant = "default" }) {
+export default function BlogCard({ post, index = 0, variant = "default", onTagClick }) {
   const isHero = variant === "hero";
 
   return (
@@ -64,6 +64,20 @@ export default function BlogCard({ post, index = 0, variant = "default" }) {
           <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-4">
             {post.excerpt}
           </p>
+
+          {post.tags?.length > 0 && (
+            <div className="flex flex-wrap gap-1 mb-3" onClick={(e) => e.preventDefault()}>
+              {post.tags.slice(0, 3).map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => onTagClick?.(tag)}
+                  className="text-[10px] px-2 py-0.5 rounded-full border border-border/50 bg-secondary/50 text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors"
+                >
+                  #{tag}
+                </button>
+              ))}
+            </div>
+          )}
 
           <div className="flex items-center gap-2 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
             Read Article <ArrowRight className="w-3 h-3" />
