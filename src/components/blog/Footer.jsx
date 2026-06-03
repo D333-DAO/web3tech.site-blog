@@ -32,6 +32,7 @@ export default function Footer() {
               <Link to="/" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Home</Link>
               <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
               <Link to="/about" className="block text-sm text-muted-foreground hover:text-primary transition-colors">About</Link>
+              <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
               <a
                 href={RSS_URL}
                 target="_blank"

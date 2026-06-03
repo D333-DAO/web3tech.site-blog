@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { label: "Home", path: "/" },
   { label: "Blog", path: "/blog" },
   { label: "About", path: "/about" },
+  { label: "Contact", path: "/contact" },
 ];
 
 export default function Navbar() {
