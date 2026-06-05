@@ -33,7 +33,7 @@ Once Debian is running, you can install Kali tools inside it.
 
 Google distributes a first-party app called **"Android Virtualization Framework Terminal"** or **"Linux Terminal"** depending on region.
 
-When you enable the Linux VM in Developer Options, the Linux app is automatically downloaded and installed. You can also find it in the Play Store for your Pixel 9a, or sideload the official APK from Google's developer site if needed.
+When you enable the Linux VM in Developer Options, the Linux app is automatically downloaded and installed by default. You can also find it in the Play Store for your Pixel 9a. If it's not available in your region, you can sideload the official APK from Google's developer site.
 
 Once installed, open it — it will automatically create and boot a Debian VM.
 
@@ -102,15 +102,15 @@ Connect from Android using any VNC client.
 
 This is the most "production-safe" way to run Linux on a Pixel.
 
-## Going Further
+## Want to Go Further?
 
-You can extend this setup with:
+I can walk you through:
 
-- A full Kali-like environment inside the VM
-- Metasploit, Burp Suite, or other heavy tools
-- GPU acceleration (where supported)
-- Automated startup scripts
-- A desktop environment that feels like a real Kali box`
+- Setting up a full Kali-like environment inside the VM
+- Installing Metasploit, Burp Suite, or other heavy tools
+- Adding GPU acceleration (where supported)
+- Automating startup scripts
+- Setting up a desktop environment that feels like a real Kali box`
   },
   {
     id: "diskpart-full-wipe-partition-format",
