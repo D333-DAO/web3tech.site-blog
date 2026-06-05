@@ -782,7 +782,240 @@ External drives must be mounted before the app starts.`
   },
 ];
 
-export const BLOG_POSTS = [...BLOG_POSTS_1, ...BLOG_POSTS_2];
+const BLOG_POSTS_3 = [
+  {
+    id: "send-crypto-command-line-cli-guide",
+    slug: "send-crypto-command-line-cli-guide",
+    title: "How to Send Crypto from the Command Line — Bitcoin, Monero, Ethereum, Kaspa & More",
+    excerpt: "The clean, no-nonsense breakdown you actually need — how to send crypto from the CLI depending on the chain. Real commands for Bitcoin, Monero, Ethereum/EVM, and Kaspa.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Blockchain",
+    tags: ["Bitcoin", "Monero", "Ethereum", "Kaspa", "CLI", "Command Line", "Crypto", "Web3", "Terminal"],
+    readTime: "8 min read",
+    featured: true,
+    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop&q=60",
+    content: `## 🚀 Quick Answer: Yes — You Can Send Crypto from the Command Line
+
+But the exact command depends entirely on the wallet/daemon you're using.
+
+Different coins use different CLI tools, so this guide gives you the correct commands for the major chains you're likely to touch: **Bitcoin, Monero**, and a **general RPC pattern** you can adapt for Kaspa, Ethereum, and others.
+
+---
+
+## 🟧 1. Bitcoin (bitcoin-cli)
+
+**Source:** [Bitcoin Core CLI docs](https://developer.bitcoin.org/reference/rpc/)
+
+### Send BTC to an Address
+
+\`\`\`bash
+bitcoin-cli sendtoaddress "ADDRESS" AMOUNT
+\`\`\`
+
+**Example:**
+
+\`\`\`bash
+bitcoin-cli sendtoaddress "bc1qxyz..." 0.01
+\`\`\`
+
+If your node requires RPC credentials:
+
+\`\`\`bash
+bitcoin-cli -rpcuser=user -rpcpassword=pass sendtoaddress "bc1qxyz..." 0.01
+\`\`\`
+
+### Raw Transaction Flow (Advanced)
+
+If you want full control over the transaction:
+
+1. \`createrawtransaction\` — Build the transaction skeleton
+2. \`fundrawtransaction\` — Select inputs and calculate fee
+3. \`signrawtransactionwithwallet\` — Sign with your wallet keys
+4. \`sendrawtransaction\` — Broadcast to the network
+
+### Useful Bitcoin CLI Commands
+
+\`\`\`bash
+bitcoin-cli getbalance              # Check wallet balance
+bitcoin-cli listunspent             # List UTXOs
+bitcoin-cli getwalletinfo           # Wallet overview
+bitcoin-cli gettransaction "TXID"   # Look up a transaction
+\`\`\`
+
+### Fee Control
+
+\`\`\`bash
+# Send with a specific fee rate (sat/vByte)
+bitcoin-cli -named sendtoaddress address="bc1q..." amount=0.01 fee_rate=10
+\`\`\`
+
+---
+
+## 🟧 2. Monero (monero-wallet-cli)
+
+**Source:** [Monero CLI guide](https://www.getmonero.org/resources/user-guides/monero-wallet-cli.html)
+
+### Open Your Wallet
+
+\`\`\`bash
+monero-wallet-cli --wallet-file mywallet
+\`\`\`
+
+### Send XMR
+
+\`\`\`bash
+transfer ADDRESS AMOUNT
+\`\`\`
+
+**Example:**
+
+\`\`\`bash
+transfer 89a1... 1.25
+\`\`\`
+
+With priority (1=default, 2=fast, 3=fastest):
+
+\`\`\`bash
+transfer --priority 2 89a1... 1.25
+\`\`\`
+
+### Useful Monero Wallet Commands
+
+\`\`\`bash
+balance                             # Show balance
+address                             # Show your wallet address
+show_transfers                      # Transaction history
+sweep_all ADDRESS                   # Send entire balance
+\`\`\`
+
+> **Note:** Monero requires a fully synced daemon (\`monerod\`) before transactions will broadcast. Always confirm your daemon is caught up before sending.
+
+---
+
+## 🟧 3. Ethereum / EVM Chains
+
+### Using geth Console
+
+\`\`\`bash
+eth.sendTransaction({
+  from: "0xYourAddr",
+  to: "0xRecipient",
+  value: web3.toWei(0.1, "ether")
+})
+\`\`\`
+
+### Using curl + JSON-RPC
+
+\`\`\`bash
+curl -X POST --data '{
+  "jsonrpc":"2.0",
+  "method":"eth_sendTransaction",
+  "params":[{
+    "from":"0xYourAddr",
+    "to":"0xRecipient",
+    "value":"0x16345785D8A0000"
+  }],
+  "id":1
+}' http://localhost:8545
+\`\`\`
+
+> The \`value\` field is in **wei** (hex). \`0x16345785D8A0000\` = 0.1 ETH.
+
+### Using cast (Foundry — Recommended for Power Users)
+
+[Foundry's cast](https://book.getfoundry.sh/cast/) is the cleanest modern EVM CLI tool:
+
+\`\`\`bash
+# Send ETH
+cast send --private-key YOUR_PRIVATE_KEY 0xRecipient --value 0.1ether
+
+# Check balance
+cast balance 0xYourAddr
+
+# Get gas price
+cast gas-price
+\`\`\`
+
+---
+
+## 🟧 4. Kaspa (kaspawallet CLI or RPC)
+
+### Using kaspawallet
+
+\`\`\`bash
+kaspawallet send --address kaspa:q... --amount 10
+\`\`\`
+
+### Using RPC (curl)
+
+\`\`\`bash
+curl -d '{
+  "jsonrpc":"2.0",
+  "method":"sendTransaction",
+  "params":{"to":"kaspa:q...","amount":10},
+  "id":1
+}' \\
+  -H "Content-Type: application/json" \\
+  http://127.0.0.1:16110
+\`\`\`
+
+### Check Kaspa Node Status
+
+\`\`\`bash
+curl -d '{"jsonrpc":"2.0","method":"getInfo","params":[],"id":1}' \\
+  -H "Content-Type: application/json" \\
+  http://127.0.0.1:16110
+\`\`\`
+
+---
+
+## 🟧 5. General Pattern for Any Crypto CLI
+
+Almost every blockchain follows this universal structure:
+
+| Step | Command Type | Purpose |
+|------|--------------|---------|
+| 1 | Start daemon | Node must be running and synced |
+| 2 | Unlock wallet | Some chains require explicit unlock |
+| 3 | Send command | \`sendtoaddress\`, \`transfer\`, etc. |
+| 4 | Confirm TX | Check mempool or block explorer |
+
+### Common Pitfalls to Avoid
+
+- **Daemon not synced** — Your transaction won't propagate if your node is behind. Always check sync status first.
+- **Wrong address format** — Bitcoin uses Bech32 (\`bc1q...\`), Monero uses long alphanumeric strings, Kaspa uses \`kaspa:\` prefix. Never mix formats.
+- **Insufficient fee** — Low fees cause stuck transactions. Bump fees with RBF (Bitcoin) or resend (Monero/Kaspa).
+- **Wallet locked** — Some daemons require explicit unlocking before sending.
+- **Testnet vs Mainnet** — Verify which network your daemon is on before sending real funds.
+
+---
+
+## 🔐 Security Notes for CLI Crypto Operations
+
+1. **Never paste private keys into a terminal you don't fully control** — shell history logs commands.
+2. **Use \`.env\` files or environment variables** for credentials — never hardcode them.
+3. **Test with small amounts first** — CLI transactions are irreversible.
+4. **Verify recipient addresses** — Always double-check the first 6 and last 6 characters.
+5. **Run your own node** — Don't rely on public RPC endpoints for production sends.
+
+---
+
+## Summary Table
+
+| Chain | CLI Tool | Send Command |
+|-------|----------|-------------|
+| Bitcoin | \`bitcoin-cli\` | \`sendtoaddress "addr" amount\` |
+| Monero | \`monero-wallet-cli\` | \`transfer addr amount\` |
+| Ethereum | \`geth\` / \`cast\` | \`eth.sendTransaction({...})\` |
+| Kaspa | \`kaspawallet\` | \`send --address addr --amount n\` |
+| Any EVM Chain | \`cast\` (Foundry) | \`cast send --value ...\` |
+
+The command line is the most direct, scriptable, and automation-friendly way to interact with blockchain networks — once you know the right tool for the chain you're working with.`
+  },
+];
+
+export const BLOG_POSTS = [...BLOG_POSTS_1, ...BLOG_POSTS_2, ...BLOG_POSTS_3];
 
 export const CATEGORIES = [
   { name: "All", count: BLOG_POSTS.length },
