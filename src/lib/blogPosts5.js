@@ -343,4 +343,114 @@ Windows audio is modular, not magical. Once the correct device is selected, perm
 
 This setup scales cleanly across headsets, USB mics, DACs, and HDMI audio paths. Work through each layer in order — Settings → Permissions → Control Panel — and the issue will surface at one of these checkpoints.`
   },
+  {
+    id: "flash-tails-os-512gb-ssd-guide",
+    slug: "flash-tails-os-512gb-ssd-internal-drive-guide",
+    title: "How to Flash Tails OS to a 512GB SSD — Wipe, Flash & Configure Persistent Storage",
+    excerpt: "Prepare a 512GB SSD for Tails OS using BalenaEtcher or dd. Covers wiping the drive, flashing the ISO, booting, and setting up persistent storage on first launch.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Privacy",
+    tags: ["Tails", "Privacy", "Linux", "SSD", "Security", "BalenaEtcher", "Bootable", "Persistent Storage"],
+    readTime: "5 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=800&auto=format&fit=crop&q=60",
+    content: `## Flash Tails OS to a 512GB SSD
+
+To format a 512GB SSD for use with Tails, it is strongly recommended to use GUI tools like **BalenaEtcher** or **Rufus** to flash the official ISO.
+
+> **Important:** Tails is designed to be amnesic and run from removable media for security. It does not "install" in the traditional sense — you flash its image directly to the drive. Running it on a 512GB SSD provides massive persistent storage space but does not change its core amnesic nature outside the designated persistent volume.
+
+---
+
+## Step 1: Identify the Target SSD
+
+Open a terminal in a Linux environment and run:
+
+\`\`\`bash
+lsblk
+\`\`\`
+
+Identify your 512GB SSD — it will appear as something like \`/dev/nvme0n1\` or \`/dev/sda\`.
+
+**Double-check the identifier before proceeding. The next steps will erase all data on this drive.**
+
+---
+
+## Step 2: Wipe and Prepare the Drive
+
+Replace \`/dev/sdX\` with your actual SSD identifier.
+
+\`\`\`bash
+# Unmount the drive if it is mounted
+sudo umount /dev/sdX*
+
+# Wipe the partition table
+sudo dd if=/dev/zero of=/dev/sdX bs=1M count=100
+\`\`\`
+
+---
+
+## Step 3: Flash Tails to the SSD
+
+### Option A — BalenaEtcher (Recommended)
+
+1. Download the [Tails ISO](https://tails.net) from the official site
+2. Open **BalenaEtcher**
+3. Select the Tails \`.img\` file
+4. Select your SSD as the target
+5. Click **Flash**
+
+### Option B — Command Line (dd)
+
+\`\`\`bash
+# Replace 'tails-amd64-x.x.img' with your actual downloaded file path
+sudo dd if=tails-amd64-x.x.img of=/dev/sdX bs=1M conv=fsync
+\`\`\`
+
+Wait for the command to complete — no progress bar will show unless you add \`status=progress\`:
+
+\`\`\`bash
+sudo dd if=tails-amd64-x.x.img of=/dev/sdX bs=1M conv=fsync status=progress
+\`\`\`
+
+---
+
+## Step 4: Boot and Configure Persistent Storage
+
+1. Restart your computer and boot from the SSD (press **F12**, **F11**, or **Esc** at startup to select the boot device)
+2. Tails will load into a live session — nothing is saved by default
+3. To save files and settings across reboots, go to:
+
+\`\`\`
+Applications → Tails → Configure persistent volume
+\`\`\`
+
+4. Set a strong passphrase and choose what to persist (files, browser bookmarks, additional software, etc.)
+5. Reboot and unlock persistent storage at the Tails greeter screen
+
+---
+
+## What Persistent Storage Gives You on a 512GB SSD
+
+| Feature | Without Persistent Storage | With Persistent Storage |
+|---------|---------------------------|------------------------|
+| Files saved | No | Yes (in encrypted volume) |
+| Settings saved | No | Yes |
+| Installed packages | No | Yes (if configured) |
+| Amnesic by default | Yes | Yes (outside the persistent volume) |
+
+A 512GB SSD gives you an unusually large persistent volume — most Tails users run on 16–64GB drives. The extra space is useful for storing large encrypted files, Electrum wallets, or offline research archives.
+
+---
+
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| List drives | \`lsblk\` |
+| Wipe drive | \`sudo dd if=/dev/zero of=/dev/sdX bs=1M count=100\` |
+| Flash Tails image | \`sudo dd if=tails.img of=/dev/sdX bs=1M conv=fsync status=progress\` |
+| Unmount first | \`sudo umount /dev/sdX*\` |`
+  },
 ];
