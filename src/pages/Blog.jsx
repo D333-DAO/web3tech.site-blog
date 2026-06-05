@@ -8,7 +8,7 @@ import TagCloud from "@/components/blog/TagCloud";
 import NewsletterWidget from "@/components/blog/NewsletterWidget";
 import { BLOG_POSTS, CATEGORIES } from "@/lib/blogData";
 import { motion } from "framer-motion";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import MobileDrawerSelect from "@/components/ui/MobileDrawerSelect";
 import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 import PullToRefreshIndicator from "@/components/blog/PullToRefreshIndicator";
 
@@ -73,36 +73,26 @@ export default function Blog() {
             />
           </div>
           {/* Mobile filter drawer trigger */}
-          <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
-            <DrawerTrigger asChild>
-              <Button variant="outline" size="icon" className="md:hidden select-none flex-shrink-0">
+          <MobileDrawerSelect
+            open={drawerOpen}
+            onOpenChange={setDrawerOpen}
+            title="Filter by Category"
+            trigger={
+              <Button variant="outline" size="icon" className="md:hidden select-none [-webkit-user-select:none] flex-shrink-0">
                 <SlidersHorizontal className="w-4 h-4" />
               </Button>
-            </DrawerTrigger>
-            <DrawerContent>
-              <DrawerHeader>
-                <DrawerTitle>Filter by Category</DrawerTitle>
-              </DrawerHeader>
-              <div className="px-4 pb-6">
-                <div className="flex flex-col gap-2">
-                  {CATEGORIES.map((cat) => (
-                    <button
-                      key={cat.name}
-                      onClick={() => { setActiveCategory(cat.name); setActiveTag(null); setDrawerOpen(false); }}
-                      className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors select-none ${
-                        activeCategory === cat.name
-                          ? "bg-primary/10 text-primary"
-                          : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                      }`}
-                    >
-                      <span>{cat.name}</span>
-                      <span className="text-xs opacity-60">{cat.count}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </DrawerContent>
-          </Drawer>
+            }
+          >
+            {CATEGORIES.map((cat) => (
+              <MobileDrawerSelect.Item
+                key={cat.name}
+                label={cat.name}
+                sublabel={cat.count}
+                active={activeCategory === cat.name}
+                onClick={() => { setActiveCategory(cat.name); setActiveTag(null); setDrawerOpen(false); }}
+              />
+            ))}
+          </MobileDrawerSelect>
         </div>
         {/* Desktop category filter */}
         <div className="hidden md:block">

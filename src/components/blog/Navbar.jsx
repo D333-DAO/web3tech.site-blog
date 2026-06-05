@@ -46,7 +46,7 @@ export default function Navbar() {
           {isChildRoute && (
             <button
               onClick={() => navigate(-1)}
-              className="md:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground select-none mr-1"
+              className="md:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground select-none [-webkit-user-select:none] mr-1"
               aria-label="Go back"
             >
               <ArrowLeft className="w-5 h-5" />
