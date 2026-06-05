@@ -1294,6 +1294,156 @@ killall python3
 Most programs respond to **Ctrl + C** — use the other methods only when a program is unresponsive or running in the background.`
   },
   {
+    id: "run-kaspa-rust-node-ubuntu",
+    slug: "run-kaspa-rust-node-ubuntu-rpc",
+    title: "Run the Kaspa Rust Node on Ubuntu with RPC Enabled — Complete Setup",
+    excerpt: "Step-by-step guide to install Rust, clone rusty-kaspa from GitHub, and run a Kaspa node with RPC enabled on Ubuntu Server.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Blockchain",
+    tags: ["Kaspa", "Rust", "Ubuntu", "Node", "RPC", "Setup", "Linux", "DevOps"],
+    readTime: "6 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop&q=60",
+    content: `## Run the Kaspa Rust Node on Ubuntu with RPC Enabled
+
+To run the kaspa-rust node on an Ubuntu server with RPC enabled, you first need to have the Rust toolchain installed and the source code cloned from GitHub.
+
+---
+
+## Prerequisites
+
+### Install Rust
+
+If not already installed, run the official rustup installer command:
+
+\`\`\`bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+rustup toolchain install stable
+\`\`\`
+
+This installs Rust and the stable toolchain required to build the Kaspa node.
+
+### Install General Prerequisites
+
+\`\`\`bash
+sudo apt install curl git build-essential libssl-dev pkg-config
+\`\`\`
+
+These packages provide essential build tools and libraries needed to compile the Rust code.
+
+### Clone the Repository
+
+\`\`\`bash
+git clone https://github.com/kaspanet/rusty-kaspa.git
+cd rusty-kaspa
+\`\`\`
+
+This clones the official Kaspa Rust repository and enters the directory.
+
+---
+
+## Command to Run the Node
+
+Once in the \`rusty-kaspa\` directory, run the node with RPC enabled:
+
+\`\`\`bash
+cargo run --release --bin kaspad -- --utxoindex --rpclisten=0.0.0.0:16110 --rpclisten-borsh=0.0.0.0:17110
+\`\`\`
+
+This command builds and runs the kaspad binary with full RPC support.
+
+---
+
+## Key Command-Line Arguments Explained
+
+### \`cargo run --release --bin kaspad\`
+Builds and runs the kaspad binary in **release mode** (optimized for performance).
+
+### \`--utxoindex\`
+**Required** for wallet functionality and certain RPC calls. Maintains an index of unspent transaction outputs.
+
+### \`--rpclisten=0.0.0.0:16110\`
+Enables the standard **JSON RPC interface** on port **16110**.
+
+- \`0.0.0.0\` — Accepts connections from any IP address
+- \`127.0.0.1\` — Only local connections (more secure)
+
+**Example — Local connections only:**
+\`\`\`bash
+cargo run --release --bin kaspad -- --utxoindex --rpclisten=127.0.0.1:16110
+\`\`\`
+
+### \`--rpclisten-borsh=0.0.0.0:17110\`
+Enables the high-performance **Borsh-encoded RPC interface** on port **17110**. Borsh is a more efficient binary serialization format.
+
+---
+
+## Additional Options
+
+### Run on Testnet
+
+Add the \`--testnet\` flag to connect to the Kaspa testnet instead of mainnet:
+
+\`\`\`bash
+cargo run --release --bin kaspad -- --testnet --utxoindex --rpclisten=0.0.0.0:16110 --rpclisten-borsh=0.0.0.0:17110
+\`\`\`
+
+### More RPC Options
+
+For additional RPC options and configurations, consult:
+- [GitHub repository documentation](https://github.com/kaspanet/rusty-kaspa)
+- [Kaspa WIKI](https://kas.fyi)
+
+---
+
+## Firewall and Port Forwarding
+
+**Important:** Ensure you have the necessary firewall rules or port forwarding set up if you want the RPC port to be accessible from outside your local network.
+
+### Open Ports on Local Firewall
+
+\`\`\`bash
+sudo ufw allow 16110/tcp
+sudo ufw allow 17110/tcp
+\`\`\`
+
+### Port Forwarding (If Using Router)
+
+If your node is behind a NAT/router and you need external access, configure port forwarding:
+
+- **External port 16110 → Internal IP:16110**
+- **External port 17110 → Internal IP:17110**
+
+---
+
+## Quick Reference
+
+| Component | Port | Purpose |
+|-----------|------|---------|
+| Standard JSON RPC | 16110 | Remote procedure calls (slower) |
+| Borsh RPC | 17110 | Binary RPC (faster) |
+| P2P Network | 16110 (default) | Peer-to-peer connections |
+
+---
+
+## Example: Full Mainnet Setup with Local-Only RPC
+
+If you want maximum security (RPC local-only) and mainnet:
+
+\`\`\`bash
+cargo run --release --bin kaspad -- --utxoindex --rpclisten=127.0.0.1:16110 --rpclisten-borsh=127.0.0.1:17110
+\`\`\`
+
+Then connect locally via:
+\`\`\`bash
+curl -s http://127.0.0.1:16110 -X POST -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":"1","method":"getInfo","params":[]}'
+\`\`\`
+
+Once the node is synced, you'll have a fully functional Kaspa node with RPC enabled.`
+  },
+  {
     id: "send-crypto-command-line-cli-guide",
     slug: "send-crypto-command-line-cli-guide",
     title: "How to Send Crypto from the Command Line — Bitcoin, Monero, Ethereum, Kaspa & More",
