@@ -174,8 +174,24 @@ export default function CommentSection({ postSlug }) {
   }, [postSlug]);
 
   const handleSubmit = async (data) => {
-    await base44.entities.Comment.create(data);
-    await fetchComments();
+    // Optimistic update: add a temporary comment immediately
+    const tempId = `temp-${Date.now()}`;
+    const optimisticComment = {
+      ...data,
+      id: tempId,
+      created_date: new Date().toISOString(),
+      approved: true,
+    };
+    setComments((prev) => [...prev, optimisticComment]);
+
+    try {
+      await base44.entities.Comment.create(data);
+      // Replace with server data
+      await fetchComments();
+    } catch {
+      // Rollback on failure
+      setComments((prev) => prev.filter((c) => c.id !== tempId));
+    }
   };
 
   const topLevel = comments.filter((c) => !c.parent_id);

@@ -1,17 +1,25 @@
-import React, { useState, useMemo } from "react";
-import { Search } from "lucide-react";
+import React, { useState, useMemo, useCallback } from "react";
+import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import BlogCard from "@/components/blog/BlogCard";
 import CategoryFilter from "@/components/blog/CategoryFilter";
 import TagCloud from "@/components/blog/TagCloud";
 import NewsletterWidget from "@/components/blog/NewsletterWidget";
-import { BLOG_POSTS } from "@/lib/blogData";
+import { BLOG_POSTS, CATEGORIES } from "@/lib/blogData";
 import { motion } from "framer-motion";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
+import PullToRefreshIndicator from "@/components/blog/PullToRefreshIndicator";
 
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTag, setActiveTag] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const onRefresh = useCallback(() => new Promise((res) => setTimeout(res, 800)), []);
+  const { pulling, refreshing } = usePullToRefresh(onRefresh);
 
   const filteredPosts = useMemo(() => {
     let posts = [...BLOG_POSTS].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -39,6 +47,7 @@ export default function Blog() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+      <PullToRefreshIndicator pulling={pulling} refreshing={refreshing} />
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -53,16 +62,63 @@ export default function Blog() {
 
       {/* Search + Filters */}
       <div className="space-y-4 mb-8">
-        <div className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            placeholder="Search articles..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-secondary border-border"
-          />
+        <div className="flex gap-2">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Search articles..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 bg-secondary border-border"
+            />
+          </div>
+          {/* Mobile filter drawer trigger */}
+          <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+            <DrawerTrigger asChild>
+              <Button variant="outline" size="icon" className="md:hidden select-none flex-shrink-0">
+                <SlidersHorizontal className="w-4 h-4" />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>Filter by Category</DrawerTitle>
+              </DrawerHeader>
+              <div className="px-4 pb-6">
+                <div className="flex flex-col gap-2">
+                  {CATEGORIES.map((cat) => (
+                    <button
+                      key={cat.name}
+                      onClick={() => { setActiveCategory(cat.name); setActiveTag(null); setDrawerOpen(false); }}
+                      className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors select-none ${
+                        activeCategory === cat.name
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                      }`}
+                    >
+                      <span>{cat.name}</span>
+                      <span className="text-xs opacity-60">{cat.count}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
-        <CategoryFilter activeCategory={activeCategory} onCategoryChange={(cat) => { setActiveCategory(cat); setActiveTag(null); }} />
+        {/* Desktop category filter */}
+        <div className="hidden md:block">
+          <CategoryFilter activeCategory={activeCategory} onCategoryChange={(cat) => { setActiveCategory(cat); setActiveTag(null); }} />
+        </div>
+        {/* Mobile: show active category pill */}
+        <div className="md:hidden">
+          {activeCategory !== "All" && (
+            <button
+              onClick={() => setActiveCategory("All")}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium select-none"
+            >
+              {activeCategory} ×
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Tag Cloud */}

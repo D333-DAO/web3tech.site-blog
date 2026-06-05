@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Download } from "lucide-react";
 import HeroSection from "@/components/blog/HeroSection";
 import BlogCard from "@/components/blog/BlogCard";
 import { BLOG_POSTS } from "@/lib/blogData";
+import { usePullToRefresh } from "@/hooks/usePullToRefresh";
+import PullToRefreshIndicator from "@/components/blog/PullToRefreshIndicator";
 
 export default function Home() {
   const featuredPosts = BLOG_POSTS.filter((p) => p.featured);
   const latestPosts = [...BLOG_POSTS].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
 
+  const onRefresh = useCallback(() => new Promise((res) => setTimeout(res, 800)), []);
+  const { pulling, refreshing } = usePullToRefresh(onRefresh);
+
   return (
     <div>
+      <PullToRefreshIndicator pulling={pulling} refreshing={refreshing} />
       <HeroSection />
 
       {/* Featured Posts */}

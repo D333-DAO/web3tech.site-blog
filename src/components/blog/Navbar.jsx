@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Terminal, Search, Sun, Moon } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, Terminal, Search, Sun, Moon, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SearchOverlay from "@/components/blog/SearchOverlay";
 import { useTheme } from "@/hooks/useTheme";
@@ -17,7 +17,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { theme, toggle } = useTheme();
+
+  const isChildRoute = location.pathname !== "/" && location.pathname !== "/blog" && location.pathname !== "/about" && location.pathname !== "/contact";
 
   useEffect(() => {
     const handler = (e) => {
@@ -33,9 +36,22 @@ export default function Navbar() {
   return (
     <>
     <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50"
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
+          {/* Back button on child routes (mobile) */}
+          {isChildRoute && (
+            <button
+              onClick={() => navigate(-1)}
+              className="md:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground select-none mr-1"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+          )}
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/30 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
