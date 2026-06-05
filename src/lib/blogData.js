@@ -215,7 +215,11 @@ active
 - \`clean\` is fast; \`clean all\` is secure but slow
 - GPT is the modern standard for UEFI systems
 - NTFS is the default for Windows; use exFAT for cross-platform compatibility
-- This sequence leaves you with a clean, ready-to-use drive`
+- This sequence leaves you with a clean, ready-to-use drive
+- **One disk per sequence** — avoid mixing multiple operations on different disks in a single batch
+- **Test in a VM first** if you're unfamiliar with DiskPart to prevent accidental data loss
+- **Backup important data** before running any disk operations
+- **Verify filesystem** — NTFS works on Windows, exFAT for cross-platform compatibility, and FAT32 for older systems or small flash drives
   },
   {
     id: "install-google-chrome-ubuntu-desktop",
@@ -267,7 +271,7 @@ google-chrome
 
 ## 🔧 Optional — Add Google's APT Repository Manually
 
-Useful if you want to install via \`apt install google-chrome-stable\` directly.
+Useful if you want to install via apt install google-chrome-stable directly.
 
 ### 1. Update Packages
 
@@ -761,10 +765,10 @@ web3.eth.getBlockNumber().then(console.log);
 
 ## 6. Additional Considerations
 
-- **Data Persistence** — Back up the \`./ethereum_data\` folder
-- **Network Modes** — Add \`--testnet\` flag for testnets
+- **Data Persistence** — Back up the ./ethereum_data folder
+- **Network Modes** — Add --testnet flag for testnets
 - **Security** — Use a firewall or NGINX reverse proxy before exposing the RPC endpoint publicly
-- **Resource Usage** — A fully synced node is resource-intensive; set Docker memory/CPU limits as needed`
+- **Resource Usage** — A fully synced node is resource-intensive; set Docker memory and CPU limits as needed`
   },
   {
     id: "ubuntu-change-storage-locations",
