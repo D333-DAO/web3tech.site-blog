@@ -928,6 +928,153 @@ Now boot from the second USB:
 Setting up TailsOS with persistent storage gives you a secure, portable, encrypted workspace you can take anywhere. Whether you're protecting sensitive research, managing crypto keys, or simply valuing privacy, this setup is one of the strongest operational security foundations you can build.`
   },
   {
+    id: "ethereum-node-docker-geth-setup",
+    slug: "ethereum-node-docker-geth-setup-guide",
+    title: "Setting Up a Docker Container to Run an Ethereum Node with Geth",
+    excerpt: "A step-by-step guide to setting up a Docker container that runs an Ethereum node using Geth (the Go Ethereum client) and enables you to interact with the blockchain.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Blockchain",
+    tags: ["Docker", "Ethereum", "Geth", "Blockchain", "Web3", "DevOps", "Node Setup"],
+    readTime: "8 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop&q=60",
+    content: `## Overview
+
+Below is a step-by-step guide to setting up a Docker container that runs an Ethereum node (using Geth, the Go Ethereum client) and enables you to interact with the blockchain.
+
+## 1. Install Docker
+
+Before anything else, ensure you have Docker installed on your host machine. You can download and install Docker Desktop for your operating system from Docker's website. On a Linux system, you can install it via your package manager. Once installed, verify by running:
+
+\`\`\`bash
+docker --version
+\`\`\`
+
+## 2. Pull the Official Ethereum Client Image
+
+Geth is one of the most common Ethereum clients. Pull its official Docker image using:
+
+\`\`\`bash
+docker pull ethereum/client-go
+\`\`\`
+
+This image is maintained by the Ethereum team and is widely used for running a node.
+
+## 3. Running the Ethereum Node in a Container
+
+You can run a container with several configuration flags to expose the necessary ports, persist data, and specify the node settings. A typical command might look like this:
+
+\`\`\`bash
+docker run -d \\
+  --name geth_node \\
+  -v $(pwd)/ethereum_data:/root/.ethereum \\
+  -p 30303:30303 \\
+  -p 8545:8545 \\
+  ethereum/client-go \\
+  --syncmode "fast" \\
+  --rpc \\
+  --rpcaddr "0.0.0.0" \\
+  --rpcport "8545" \\
+  --rpcapi "eth,net,web3,personal"
+\`\`\`
+
+**Explanation of the flags:**
+
+- \`-d\` runs the container in detached mode.
+- \`--name geth_node\` assigns a friendly name to the container.
+- \`-v $(pwd)/ethereum_data:/root/.ethereum\` mounts a local directory to persist blockchain data.
+- \`-p 30303:30303\` exposes the default P2P networking port.
+- \`-p 8545:8545\` exposes the JSON-RPC API port, which allows you to interact with the node.
+- \`--syncmode "fast"\` speeds up the sync process.
+- \`--rpc\` enables the remote procedure call interface.
+- \`--rpcaddr "0.0.0.0"\` listens on all network interfaces (use with caution in production).
+- \`--rpcport "8545"\` sets the port for JSON-RPC connections.
+- \`--rpcapi "eth,net,web3,personal"\` exposes a set of APIs you might need for interacting with the blockchain.
+
+> **Note:** In production, exposing the RPC endpoint via \`--rpcaddr "0.0.0.0"\` may have security implications. Limit access with a firewall or bind only to localhost.
+
+## 4. Using Docker Compose for a Reproducible Setup
+
+For easier management, you can use a \`docker-compose.yml\` file:
+
+\`\`\`yaml
+version: '3'
+
+services:
+  geth:
+    image: ethereum/client-go
+    container_name: geth_node
+    volumes:
+      - ./ethereum_data:/root/.ethereum
+    ports:
+      - "30303:30303"
+      - "8545:8545"
+    command:
+      - --syncmode
+      - fast
+      - --rpc
+      - --rpcaddr
+      - 0.0.0.0
+      - --rpcport
+      - "8545"
+      - --rpcapi
+      - personal,db,eth,net,web3
+\`\`\`
+
+Run the container with:
+
+\`\`\`bash
+docker-compose up -d
+\`\`\`
+
+This file helps you codify your setup so you can easily redeploy or share with collaborators.
+
+## 5. Interacting with the Ethereum Node
+
+Once your container is running, you can interact with the Ethereum blockchain by making JSON-RPC calls to the node. For example, using web3.js:
+
+\`\`\`javascript
+const Web3 = require('web3');
+const web3 = new Web3('http://localhost:8545');
+
+web3.eth.getBlockNumber().then(console.log);
+\`\`\`
+
+This snippet retrieves the current block number. You can expand your application logic to deploy contracts, send transactions, and more.
+
+## 6. Additional Considerations
+
+**Data Persistence:**
+The mounted volume (\`./ethereum_data\`) keeps your blockchain data intact between container restarts. Ensure you back up this folder if it contains valuable state.
+
+**Network Modes:**
+Depending on your goals (mainnet, testnet, or a private chain), you may add flags like \`--testnet\` or configure custom genesis files.
+
+**Resource Usage:**
+Running a fully synced Ethereum node can be resource-intensive. Adjust container resource limits using Docker's options (\`--memory\`, \`--cpus\`).
+
+**Security:**
+If you're exposing the JSON-RPC interface, consider adding authentication, encryption (e.g., using an NGINX reverse proxy over HTTPS), or firewall rules to limit the request origin.
+
+**Advanced Configurations:**
+For more advanced usage—like enabling mining, configuring peers manually, or optimizing sync parameters—refer to the [Geth documentation](https://geth.ethereum.org/docs/).
+
+## More Ideas and Related Topics
+
+**Smart Contract Development Environment:**
+Consider complementing your node container with a developer toolchain (such as Truffle or Hardhat) in another container. This multi-container setup isolates your smart contract deployment and testing processes.
+
+**Private Ethereum Networks:**
+For learning or isolated testing, set up a private Ethereum network. This involves creating a custom genesis block, configuring multiple containers as nodes, and setting up a consensus mechanism.
+
+**Monitoring and Logging:**
+Integrate a containerized logging solution (like the ELK stack) to monitor blockchain events and node performance — particularly useful in production environments.
+
+**Scaling and Cloud Deployments:**
+If you plan to deploy in the cloud, research orchestration tools like Kubernetes. They can manage multiple containers, automated scaling, and rolling updates for your Ethereum nodes and associated services.`
+  },
+  {
     id: "majorgeeks-site-info",
     slug: "information-on-the-site-majorgeeks-com",
     title: "MajorGeeks.com: A Powerful, Trusted & No-Nonsense Software Hub (2026 Guide)",
