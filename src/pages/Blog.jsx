@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import BlogCard from "@/components/blog/BlogCard";
 import CategoryFilter from "@/components/blog/CategoryFilter";
 import TagCloud from "@/components/blog/TagCloud";
+import NewsletterWidget from "@/components/blog/NewsletterWidget";
 import { BLOG_POSTS } from "@/lib/blogData";
 import { motion } from "framer-motion";
 
@@ -76,19 +77,29 @@ export default function Blog() {
         </p>
       )}
 
-      {/* Posts grid */}
-      {filteredPosts.length > 0 ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPosts.map((post, i) => (
-            <BlogCard key={post.id} post={post} index={i} onTagClick={setActiveTag} />
-          ))}
+      {/* Main content + Sidebar */}
+      <div className="flex gap-8 items-start">
+        {/* Posts grid */}
+        <div className="flex-1 min-w-0">
+          {filteredPosts.length > 0 ? (
+            <div className="grid sm:grid-cols-2 gap-6">
+              {filteredPosts.map((post, i) => (
+                <BlogCard key={post.id} post={post} index={i} onTagClick={setActiveTag} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 text-muted-foreground">
+              <p className="text-lg font-medium">No articles found</p>
+              <p className="text-sm mt-1">Try adjusting your search or filters</p>
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="text-center py-20 text-muted-foreground">
-          <p className="text-lg font-medium">No articles found</p>
-          <p className="text-sm mt-1">Try adjusting your search or filters</p>
-        </div>
-      )}
+
+        {/* Sidebar */}
+        <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-24">
+          <NewsletterWidget />
+        </aside>
+      </div>
     </div>
   );
 }

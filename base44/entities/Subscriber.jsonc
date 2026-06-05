@@ -1,0 +1,13 @@
+{
+  "name": "Subscriber",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "Subscriber email address"
+    }
+  },
+  "required": [
+    "email"
+  ]
+}
