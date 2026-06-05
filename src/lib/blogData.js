@@ -219,7 +219,7 @@ active
 - **One disk per sequence** — avoid mixing multiple operations on different disks in a single batch
 - **Test in a VM first** if you're unfamiliar with DiskPart to prevent accidental data loss
 - **Backup important data** before running any disk operations
-- **Verify filesystem** — NTFS works on Windows, exFAT for cross-platform compatibility, and FAT32 for older systems or small flash drives
+- **Verify filesystem** — NTFS works on Windows, exFAT for cross-platform compatibility, and FAT32 for older systems or small flash drives`
   },
   {
     id: "install-google-chrome-ubuntu-desktop",
