@@ -18,21 +18,36 @@ export default function MobileBottomNav() {
   const handleTabPress = useCallback((path) => {
     const current = location.pathname;
 
-    // Save scroll position of the current page before navigating away
-    const currentTab = TABS.find((t) => t.path === current || (t.path === "/blog" && current.startsWith("/blog/")));
-    if (currentTab) {
-      sessionStorage.setItem(scrollKey(currentTab.path), String(window.scrollY));
+    // Determine which tab is currently "active" (may be a sub-page)
+    const activeTab = TABS.find(
+      (t) => t.path === current || (t.path !== "/" && current.startsWith(t.path + "/"))
+    );
+
+    // Save scroll position of the current tab's root before leaving
+    if (activeTab) {
+      sessionStorage.setItem(scrollKey(activeTab.path), String(window.scrollY));
     }
 
-    // If already on this tab's root, scroll back to top
-    if (current === path) {
+    const isOnTabRoot = current === path;
+    const isOnTabSubPage = activeTab?.path === path && !isOnTabRoot;
+
+    if (isOnTabRoot) {
+      // Already at this tab's root → scroll to top (like native)
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
+    if (isOnTabSubPage) {
+      // On a sub-page of the active tab → pop back to tab root
+      navigate(path, { replace: true });
+      window.scrollTo({ top: 0, behavior: "instant" });
+      return;
+    }
+
+    // Switching to a different tab → always navigate to that tab's root
     navigate(path);
 
-    // Restore saved scroll position after navigation paint
+    // Restore saved scroll position for the destination tab
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         const saved = sessionStorage.getItem(scrollKey(path));

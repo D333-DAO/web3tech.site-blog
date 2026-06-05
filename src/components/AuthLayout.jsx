@@ -15,12 +15,17 @@ import {
 
 function DeleteAccountSection() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleDelete = async () => {
     setLoading(true);
+    setError(null);
     try {
-      await base44.auth.logout("/");
-    } finally {
+      await base44.functions.invoke("deleteAccount", {});
+      // Hard redirect after deletion to fully reset app state
+      window.location.href = "/";
+    } catch (err) {
+      setError("Failed to delete account. Please try again.");
       setLoading(false);
     }
   };
@@ -41,6 +46,7 @@ function DeleteAccountSection() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
+            {error && <p className="text-destructive text-xs w-full text-left mb-2">{error}</p>}
             <AlertDialogCancel className="select-none">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
