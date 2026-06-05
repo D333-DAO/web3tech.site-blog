@@ -453,4 +453,126 @@ A 512GB SSD gives you an unusually large persistent volume — most Tails users 
 | Flash Tails image | \`sudo dd if=tails.img of=/dev/sdX bs=1M conv=fsync status=progress\` |
 | Unmount first | \`sudo umount /dev/sdX*\` |`
   },
+  {
+    id: "install-kali-linux-wsl2-windows-11-win-kex",
+    slug: "install-kali-linux-wsl2-windows-11-win-kex-gui",
+    title: "Install Kali Linux on Windows 11 with WSL2 and Win-KeX GUI — Complete Guide",
+    excerpt: "Run a full Kali Linux desktop on Windows 11 using WSL2 and Win-KeX. Covers enabling WSL2, installing Kali, updating tools, and launching the graphical desktop in window or seamless mode.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Security",
+    tags: ["Kali Linux", "WSL2", "Windows 11", "Win-KeX", "Linux", "Security", "Installation"],
+    readTime: "5 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=800&auto=format&fit=crop&q=60",
+    content: `## Install Kali Linux on Windows 11 Using WSL2
+
+Run a full Kali Linux graphical desktop environment directly on Windows 11 — no dual boot, no VM, no reboots. WSL2 + Win-KeX gives you the complete Kali toolkit with a native-feeling GUI.
+
+---
+
+## Step 1: Enable WSL2
+
+Open **PowerShell as Administrator** and run:
+
+\`\`\`powershell
+wsl --install
+\`\`\`
+
+Restart your computer if prompted. WSL2 is enabled by default on Windows 11.
+
+---
+
+## Step 2: Install Kali Linux
+
+In PowerShell, run:
+
+\`\`\`powershell
+wsl --install -d kali-linux
+\`\`\`
+
+A new terminal window will open to complete the installation.
+
+---
+
+## Step 3: Create Your Unix User
+
+When prompted, create a **username** and **password** for your Kali environment. This is your standard Linux user — separate from your Windows account.
+
+---
+
+## Step 4: Update Kali
+
+Inside the Kali terminal, update the OS and all packages:
+
+\`\`\`bash
+sudo apt update && sudo apt full-upgrade -y
+\`\`\`
+
+This ensures all tools are current before installing the desktop.
+
+---
+
+## Step 5: Install Win-KeX (GUI Desktop)
+
+Install the Kali Desktop Experience:
+
+\`\`\`bash
+sudo apt install -y kali-win-kex
+\`\`\`
+
+This installs the full Xfce desktop environment optimized for WSL2.
+
+---
+
+## Step 6: Launch the Desktop
+
+### Window Mode (Recommended)
+
+Opens Kali in a dedicated window:
+
+\`\`\`bash
+kex --win -s
+\`\`\`
+
+### Seamless Mode
+
+Kali's taskbar and apps blend into the Windows desktop:
+
+\`\`\`bash
+kex --sl -s
+\`\`\`
+
+---
+
+## Exiting Win-KeX
+
+Close the Win-KeX window, or from the Kali terminal run:
+
+\`\`\`bash
+kex --exit
+\`\`\`
+
+---
+
+## Key Commands Reference
+
+| Goal | Command |
+|------|---------|
+| Launch GUI | \`kex\` |
+| Launch GUI (window mode) | \`kex --win -s\` |
+| Launch GUI (seamless mode) | \`kex --sl -s\` |
+| Stop GUI | \`kex --exit\` |
+| List running distros | \`wsl -l --running\` |
+| Update Kali | \`sudo apt update && sudo apt full-upgrade -y\` |
+
+---
+
+## Notes
+
+- **Windows 11 must be fully updated** to support GUI apps via WSLg
+- Win-KeX window mode is the most stable option for daily use
+- Seamless mode requires the Win-KeX sound server — use \`kex --sl -s\` to include it
+- All Kali tools are accessible from inside the GUI terminal or directly from the WSL terminal`
+  },
 ];
