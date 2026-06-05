@@ -662,4 +662,100 @@ Replace \`48...your_address...\` with your full Monero wallet address.
 - [ ] Startup flags entered in Settings → Node → Daemon startup flags
 - [ ] Wallet address is correct in \`--start-mining\` flag`
   },
+  {
+    id: "update-windows-11-cmd-winget-usoclient",
+    slug: "update-windows-11-apps-cmd-winget-usoclient",
+    title: "Update Windows 11 & All Apps from Command Prompt — winget & usoclient Guide",
+    excerpt: "Use winget upgrade --all to update every installed app and usoclient commands to trigger Windows OS updates — all from an elevated Command Prompt.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Software",
+    tags: ["Windows 11", "winget", "CMD", "Command Prompt", "Updates", "usoclient", "WSL2", "Package Manager"],
+    readTime: "4 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=60",
+    content: `## Update Windows 11 & All Apps from the Command Line
+
+You can update your entire Windows 11 system and all installed applications without opening Settings or the Microsoft Store — using two built-in tools: **winget** and **usoclient**.
+
+---
+
+## Step 1 — Open Command Prompt as Administrator
+
+1. Press the **Windows key**, type \`cmd\`
+2. Right-click **Command Prompt** → select **Run as administrator**
+
+---
+
+## Step 2 — Update All Installed Applications
+
+Run this command to upgrade every app that winget knows about:
+
+\`\`\`cmd
+winget upgrade --all
+\`\`\`
+
+If prompted about source agreements, type \`Y\` and press Enter.
+
+> **Note:** If a browser like Chrome or Edge is currently running, it may not update until it is closed. Close your browser first for best results.
+
+You can also try the \`update\` alias — it works on some systems:
+
+\`\`\`cmd
+winget update --all
+\`\`\`
+
+> **Linux users:** The equivalent on Debian/Ubuntu-based systems is \`sudo apt update && sudo apt upgrade\`. This also works inside Kali running under WSL2 on Windows 11.
+
+---
+
+## Step 3 — Update the Windows 11 OS
+
+Use **usoclient** to trigger the Windows Update pipeline directly from the command line:
+
+\`\`\`cmd
+usoclient StartScan
+\`\`\`
+Scans for available Windows updates.
+
+\`\`\`cmd
+usoclient StartDownload
+\`\`\`
+Downloads any pending updates.
+
+\`\`\`cmd
+usoclient StartInstall
+\`\`\`
+Installs downloaded updates.
+
+### Alternatively — Open the Update Settings Page Directly
+
+\`\`\`cmd
+start ms-settings:windowsupdate-action
+\`\`\`
+
+This launches the Windows Update page in Settings where you can check for updates with one click.
+
+---
+
+## Quick Reference
+
+| Goal | Command |
+|------|---------|
+| Update all apps | \`winget upgrade --all\` |
+| Scan for OS updates | \`usoclient StartScan\` |
+| Download OS updates | \`usoclient StartDownload\` |
+| Install OS updates | \`usoclient StartInstall\` |
+| Open Windows Update UI | \`start ms-settings:windowsupdate-action\` |
+| Update Linux (Debian/Ubuntu/Kali) | \`sudo apt update && sudo apt upgrade\` |
+
+---
+
+## Notes
+
+- **winget** comes pre-installed on Windows 11. If missing, install it from the [Microsoft Store](https://aka.ms/getwinget).
+- Run all commands as Administrator for full access.
+- After installing major Windows updates, a **restart may be required** to apply them.
+- This workflow is especially useful for power users, sysadmins, and anyone running Kali Linux via WSL2 who wants a single CLI session to update both environments.`
+  },
 ];
