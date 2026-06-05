@@ -1104,6 +1104,196 @@ chmod +x myscript.sh
 Most "No such file or directory" errors are resolved by one of these simple steps.`
   },
   {
+    id: "exit-programs-ubuntu-server",
+    slug: "exit-programs-ubuntu-server-keyboard-shortcuts",
+    title: "How to Exit Programs in Ubuntu Server — Keyboard Shortcuts & kill Commands",
+    excerpt: "Master keyboard shortcuts and command-line tools to exit, suspend, or terminate programs in Ubuntu Server. Covers Ctrl+C, Ctrl+Z, kill, pkill, and special exits for nano, vim, and more.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Ubuntu", "Linux", "Terminal", "Command Line", "Process Management", "Keyboard Shortcuts"],
+    readTime: "5 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=800&auto=format&fit=crop&q=60",
+    content: `## Exit a Program in Ubuntu Server
+
+On Ubuntu Server (command-line interface), you can use keyboard shortcuts to gracefully stop running programs or command-line tools to terminate unresponsive ones.
+
+---
+
+## Keyboard Shortcuts
+
+### Ctrl + C
+**Most common way to stop a running program.**
+
+This sends a **SIGINT signal**, which allows the program to clean up and exit properly. Use this for:
+- \`ping\` commands
+- Running scripts
+- Long-running processes in the foreground
+
+\`\`\`bash
+ping 8.8.8.8
+# Now press Ctrl + C to stop
+\`\`\`
+
+### Ctrl + D
+**Signal end of input / exit shell session.**
+
+This sends an **end-of-transmission character** and will:
+- Exit the current shell session
+- Log you out of the server if at the main prompt
+
+Use this to quickly logout without typing \`exit\`.
+
+### Ctrl + Z
+**Suspend the current program.**
+
+This **pauses** the running program and returns you to the shell prompt. The program stays in memory and can be:
+
+**Resume in foreground:**
+\`\`\`bash
+fg
+\`\`\`
+
+**Move to background:**
+\`\`\`bash
+bg
+\`\`\`
+
+---
+
+## Terminating Unresponsive Programs
+
+If a program doesn't respond to Ctrl + C or is running in the background, use the \`kill\` commands.
+
+### Step 1 — Find the Process ID (PID)
+
+**Using ps aux with grep:**
+\`\`\`bash
+ps aux | grep <program_name>
+\`\`\`
+
+The **PID is the second column** in the output.
+
+**Using pgrep (more direct):**
+\`\`\`bash
+pgrep <program_name>
+\`\`\`
+
+### Step 2 — Terminate the Program
+
+**Graceful termination (recommended first):**
+\`\`\`bash
+kill <PID>
+\`\`\`
+
+This sends **SIGTERM**, allowing the program to clean up before exiting.
+
+**Forceful termination (last resort):**
+\`\`\`bash
+kill -9 <PID>
+\`\`\`
+
+This sends **SIGKILL** and immediately terminates the process. Use only if graceful termination fails.
+
+---
+
+## Kill by Name (No PID Required)
+
+### killall
+Kill all instances of a program by name:
+\`\`\`bash
+killall <program_name>
+\`\`\`
+
+### pkill
+Kill programs using pattern matching:
+\`\`\`bash
+pkill <program_name>
+\`\`\`
+
+Both are faster than finding the PID manually.
+
+---
+
+## Special Program Exits
+
+Some command-line tools have their own specific exit commands:
+
+### nano Editor
+\`\`\`
+Ctrl + X
+\`\`\`
+Follow the prompts to save or exit.
+
+### vim Editor
+Press **Esc** first, then:
+
+**Exit without saving:**
+\`\`\`
+:q!
+\`\`\`
+
+**Save and exit:**
+\`\`\`
+:wq
+\`\`\`
+
+### less (File Viewer)
+\`\`\`
+q
+\`\`\`
+Press \`q\` to quit and return to the terminal.
+
+### top or htop (System Monitors)
+\`\`\`
+q
+\`\`\`
+Press \`q\` to exit the monitoring interface.
+
+**In htop:** Select a process and press **F9** to open the kill menu.
+
+---
+
+## Quick Reference
+
+| Goal | Command/Shortcut |
+|------|------------------|
+| Stop foreground program | **Ctrl + C** |
+| Exit shell / logout | **Ctrl + D** |
+| Suspend program | **Ctrl + Z** |
+| Resume suspended program | \`fg\` |
+| Find process ID | \`pgrep <name>\` |
+| Graceful termination | \`kill <PID>\` |
+| Force termination | \`kill -9 <PID>\` |
+| Kill by name | \`killall <name>\` |
+| Kill by pattern | \`pkill <name>\` |
+
+---
+
+## Quick Examples
+
+**Stop a running ping:**
+\`\`\`bash
+ping 8.8.8.8
+# Ctrl + C
+\`\`\`
+
+**Find and kill a stuck node process:**
+\`\`\`bash
+pgrep node
+# Output: 1234
+kill 1234
+\`\`\`
+
+**Kill all instances of a program by name:**
+\`\`\`bash
+killall python3
+\`\`\`
+
+Most programs respond to **Ctrl + C** — use the other methods only when a program is unresponsive or running in the background.`
+  },
+  {
     id: "send-crypto-command-line-cli-guide",
     slug: "send-crypto-command-line-cli-guide",
     title: "How to Send Crypto from the Command Line — Bitcoin, Monero, Ethereum, Kaspa & More",
