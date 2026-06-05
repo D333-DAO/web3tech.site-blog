@@ -915,6 +915,195 @@ This lists **all containers**, including stopped ones, so you can find the corre
 | Exit log stream | **Ctrl + C** |`
   },
   {
+    id: "linux-no-such-file-or-directory-error",
+    slug: "linux-no-such-file-or-directory-error-fix",
+    title: "Fix \"No such file or directory\" Error on Linux — Troubleshooting Guide",
+    excerpt: "Practical fixes for the \"No such file or directory\" error on Linux. Covers typos, spaces, case sensitivity, absolute vs relative paths, permissions, and executable scripts.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Linux", "Troubleshooting", "Command Line", "Permissions", "File System", "Error Handling"],
+    readTime: "5 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=800&auto=format&fit=crop&q=60",
+    content: `## What Does "No such file or directory" Mean?
+
+The "No such file or directory" error indicates the system cannot find the file or folder at the path you provided. This is usually due to:
+
+- A typo in the filename or path
+- Incorrect directory navigation
+- Incorrect file permissions
+- Using absolute paths (\`/\`) when you meant relative paths
+- Files on different filesystems or moved locations
+
+---
+
+## Immediate Fixes to Try
+
+### 1. Verify Your Current Location
+
+\`\`\`bash
+pwd
+\`\`\`
+
+This prints your **current working directory**. Confirm you're in the right folder before trying to access a file.
+
+### 2. List Files in the Current Folder
+
+\`\`\`bash
+ls
+\`\`\`
+
+This shows all files and folders in your current location so you can spot typos in filenames.
+
+---
+
+## Handle Spaces in Filenames
+
+If the file name has spaces, you **must** wrap it in quotes or escape the spaces:
+
+**Option 1 — Wrap in quotes:**
+
+\`\`\`bash
+cat "my file.txt"
+\`\`\`
+
+**Option 2 — Use backslashes:**
+
+\`\`\`bash
+cat my\ file.txt
+\`\`\`
+
+Without quotes or escapes, \`my file.txt\` is interpreted as two separate arguments, and the system looks for a file named \`my\`.
+
+---
+
+## Check Case Sensitivity
+
+Linux and macOS are **case-sensitive**. Ensure capitalization matches exactly:
+
+- \`Documents\` ≠ \`documents\`
+- \`MyFile.txt\` ≠ \`myfile.txt\`
+
+If you're unsure, use:
+
+\`\`\`bash
+ls -i
+\`\`\`
+
+This lists files with their inode numbers, helping you identify exact filenames.
+
+---
+
+## Use Absolute Paths When Unsure
+
+If you're not sure of your relative location, use the full path starting from root:
+
+\`\`\`bash
+cat /home/user/Documents/file.txt
+\`\`\`
+
+**Tip:** If running a program and it can't find files, try changing into its directory first:
+
+\`\`\`bash
+cd /path/to/program
+./program
+\`\`\`
+
+Running it from within the folder eliminates path confusion.
+
+---
+
+## Check File Permissions
+
+Ensure you have permission to access the file:
+
+\`\`\`bash
+ls -l filename
+\`\`\`
+
+This shows permissions. If you see \`-rw-r--r--\`, you can read it. If you can't, you may need to adjust permissions.
+
+---
+
+## Scripts Not Executable
+
+If running a script and get "No such file or directory":
+
+\`\`\`bash
+chmod +x script.sh
+./script.sh
+\`\`\`
+
+The \`chmod +x\` command makes the script executable.
+
+---
+
+## Windows to Linux Issues
+
+If a file was created on Windows and moved to Linux, it might contain hidden **carriage return characters** that break execution. Fix it with:
+
+\`\`\`bash
+dos2unix filename.sh
+\`\`\`
+
+Then try running it again:
+
+\`\`\`bash
+./filename.sh
+\`\`\`
+
+---
+
+## Quick Troubleshooting Checklist
+
+| Issue | Fix |
+|-------|-----|
+| Typo in filename | Run \`ls\` to verify exact spelling |
+| File has spaces | Wrap in quotes: \`"file name.txt"\` |
+| Wrong case | Check exact capitalization with \`ls\` |
+| Script not executable | \`chmod +x script.sh\` |
+| Windows carriage returns | \`dos2unix filename.sh\` |
+| Lost in directories | Run \`pwd\` to see current location |
+| Can't read file | Run \`ls -l\` to check permissions |
+
+---
+
+## Example Workflow
+
+You see the error:
+
+\`\`\`
+bash: ./myscript.sh: No such file or directory
+\`\`\`
+
+**Step 1 — Check where you are:**
+
+\`\`\`bash
+pwd
+\`\`\`
+
+**Step 2 — List files to verify script exists:**
+
+\`\`\`bash
+ls
+\`\`\`
+
+**Step 3 — Make it executable:**
+
+\`\`\`bash
+chmod +x myscript.sh
+\`\`\`
+
+**Step 4 — Run it:**
+
+\`\`\`bash
+./myscript.sh
+\`\`\`
+
+Most "No such file or directory" errors are resolved by one of these simple steps.`
+  },
+  {
     id: "send-crypto-command-line-cli-guide",
     slug: "send-crypto-command-line-cli-guide",
     title: "How to Send Crypto from the Command Line — Bitcoin, Monero, Ethereum, Kaspa & More",
