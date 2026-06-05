@@ -1444,6 +1444,133 @@ curl -s http://127.0.0.1:16110 -X POST -H 'Content-Type: application/json' -d '{
 Once the node is synced, you'll have a fully functional Kaspa node with RPC enabled.`
   },
   {
+    id: "switch-gui-to-terminal-ubuntu",
+    slug: "switch-gui-to-terminal-tty-ubuntu",
+    title: "Switch from GUI to Terminal (TTY) on Ubuntu — Keyboard Shortcuts & Methods",
+    excerpt: "Use keyboard shortcuts or command-line commands to switch between the graphical desktop and text-only terminal (TTY) on Ubuntu.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Ubuntu", "Terminal", "TTY", "GUI", "Keyboard Shortcuts", "Linux", "System Management"],
+    readTime: "4 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=800&auto=format&fit=crop&q=60",
+    content: `## Switch from GUI to Terminal (TTY) on Ubuntu
+
+You can easily switch from the GUI (Graphical User Interface) to a text-only terminal (known as a virtual terminal or TTY) using keyboard shortcuts.
+
+---
+
+## Using Keyboard Shortcuts
+
+The most common method is to use **Ctrl + Alt + F3** to switch to a terminal session.
+
+### Switch to Text Terminal
+
+Press:
+\`\`\`
+Ctrl + Alt + F3
+\`\`\`
+
+You can also use **F4, F5, or F6** to access different terminal sessions:
+\`\`\`
+Ctrl + Alt + F3   (TTY 3)
+Ctrl + Alt + F4   (TTY 4)
+Ctrl + Alt + F5   (TTY 5)
+Ctrl + Alt + F6   (TTY 6)
+\`\`\`
+
+At the prompt, log in with your **username and password**, then you have full command-line access.
+
+---
+
+## Returning to the GUI
+
+To switch back to your graphical session from the terminal:
+
+Press:
+\`\`\`
+Ctrl + Alt + F2
+\`\`\`
+
+**Older Ubuntu versions:** The GUI might be on **F7**, so try:
+\`\`\`
+Ctrl + Alt + F7
+\`\`\`
+
+---
+
+## On Laptops (Fn Key)
+
+On some laptops, you may need to press the **Fn key** in combination:
+
+\`\`\`
+Ctrl + Fn + Alt + F3   (to terminal)
+Ctrl + Fn + Alt + F2   (back to GUI)
+\`\`\`
+
+Check your laptop's keyboard layout if standard shortcuts don't work.
+
+---
+
+## Alternative Method: Command Line
+
+If you have a terminal window open within the GUI, you can stop the graphical display manager directly.
+
+### Disable GUI and Switch to Console
+
+Open a terminal in the GUI (usually **Ctrl + Alt + T**) and run:
+
+\`\`\`bash
+sudo systemctl isolate multi-user.target
+\`\`\`
+
+This disables the graphical desktop and drops you to a console prompt. You may still need to switch to an available TTY using **Ctrl + Alt + F3**.
+
+### Re-enable the GUI
+
+From the console, run:
+
+\`\`\`bash
+sudo systemctl start graphical.target
+\`\`\`
+
+You may then need to switch back to the correct TTY using **Ctrl + Alt + F2**.
+
+---
+
+## Quick Reference
+
+| Goal | Shortcut |
+|------|----------|
+| Switch to terminal (TTY 3) | **Ctrl + Alt + F3** |
+| Switch to terminal (TTY 4) | **Ctrl + Alt + F4** |
+| Switch to terminal (TTY 5) | **Ctrl + Alt + F5** |
+| Switch to terminal (TTY 6) | **Ctrl + Alt + F6** |
+| Return to GUI | **Ctrl + Alt + F2** |
+| Return to GUI (older versions) | **Ctrl + Alt + F7** |
+| Disable GUI via command | \`sudo systemctl isolate multi-user.target\` |
+| Re-enable GUI via command | \`sudo systemctl start graphical.target\` |
+
+---
+
+## Common Use Cases
+
+**Troubleshooting GPU or Display Issues:**
+If your GUI becomes unresponsive or freezes, switch to a TTY and diagnose the problem from the command line.
+
+**Lightweight Work:**
+TTYs use far fewer resources than the GUI. Switch to a terminal session if you're running resource-intensive tasks and want to free up memory.
+
+**Remote Server Access:**
+When SSH-ing into a remote Ubuntu server, you're already in a terminal. These shortcuts don't apply, but the concepts are the same.
+
+**Recovery Mode:**
+If your desktop environment crashes, TTY access lets you restart the display manager or debug system issues.
+
+Most modern Ubuntu systems use **F2 for GUI** and **F3–F6 for terminals**. Test different F-keys if the standard shortcuts don't work on your system.`
+  },
+  {
     id: "send-crypto-command-line-cli-guide",
     slug: "send-crypto-command-line-cli-guide",
     title: "How to Send Crypto from the Command Line — Bitcoin, Monero, Ethereum, Kaspa & More",
