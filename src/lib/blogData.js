@@ -1,5 +1,6 @@
 // Blog data — source of truth for all posts
 import { BLOG_POSTS_2 } from "./blogPosts2";
+import { BLOG_POSTS_3 } from "./blogPosts3";
 import { BLOG_POSTS_4 } from "./blogPosts4";
 import { BLOG_POSTS_5 } from "./blogPosts5";
 
@@ -598,7 +599,7 @@ The rise of digital currency demands empathetic, community-first solutions. By e
   {
     id: "ethereum-node-docker-geth",
     title: "Run an Ethereum Node with Docker and Geth — Complete Setup Guide",
-    slug: "ethereum-node-docker-geth-complete-guide",
+    slug: "ethereum-node-docker-geth-setup-guide",
     excerpt: "Step-by-step guide to setting up a Docker container that runs an Ethereum node using Geth (Go Ethereum client) and enables you to interact with the blockchain.",
     date: "2026-05-23",
     author: "Derrk Samuel",
@@ -784,7 +785,7 @@ External drives must be mounted before the app starts.`
   },
 ];
 
-const BLOG_POSTS_3 = [
+const BLOG_POSTS_3_INLINE = [
   {
     id: "docker-container-logs-linux",
     slug: "docker-container-logs-linux-guide",
@@ -1916,7 +1917,14 @@ The command line is the most direct, scriptable, and automation-friendly way to 
   },
 ];
 
-export const BLOG_POSTS = [...BLOG_POSTS_1, ...BLOG_POSTS_2, ...BLOG_POSTS_3, ...BLOG_POSTS_4, ...BLOG_POSTS_5];
+// Deduplicate by slug before exporting
+const allPosts = [...BLOG_POSTS_1, ...BLOG_POSTS_2, ...BLOG_POSTS_3, ...BLOG_POSTS_3_INLINE, ...BLOG_POSTS_4, ...BLOG_POSTS_5];
+const seenSlugs = new Set();
+export const BLOG_POSTS = allPosts.filter(p => {
+  if (seenSlugs.has(p.slug)) return false;
+  seenSlugs.add(p.slug);
+  return true;
+});
 
 export const CATEGORIES = [
   { name: "All", count: BLOG_POSTS.length },
@@ -1931,7 +1939,7 @@ export const AUTHOR = {
   name: "Derrk Samuel",
   bio: "Web3, crypto, and Linux PC insights — practical guides, security tips, mining setups, blockchain tools, and decentralized tech strategies for techs.",
   blogs: [
-    { name: "The Web3 Tech", url: "https://blog.theweb3tech.com" },
+    { name: "The Web3 Tech", url: "https://theweb3tech.site" },
     { name: "TechDerks Insights", url: "https://techderksinsights.blogspot.com" }
   ]
 };
