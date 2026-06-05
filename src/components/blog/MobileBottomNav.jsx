@@ -1,11 +1,12 @@
 import React, { useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, BookOpen, Info } from "lucide-react";
+import { Home, BookOpen, Info, Settings } from "lucide-react";
 
 const TABS = [
   { label: "Home", path: "/", icon: Home },
   { label: "Blog", path: "/blog", icon: BookOpen },
   { label: "About", path: "/about", icon: Info },
+  { label: "Settings", path: "/settings", icon: Settings },
 ];
 
 // Keys for persisting scroll position per tab

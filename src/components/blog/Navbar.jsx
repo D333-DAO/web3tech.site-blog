@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Terminal, Search, Sun, Moon, ArrowLeft } from "lucide-react";
+import { Menu, X, Terminal, Search, Sun, Moon, ArrowLeft, UserCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import SearchOverlay from "@/components/blog/SearchOverlay";
 import { useTheme } from "@/hooks/useTheme";
+import { useAuth } from "@/lib/AuthContext";
 
 const NAV_LINKS = [
   { label: "Home", path: "/" },
@@ -19,6 +20,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { theme, toggle } = useTheme();
+  const { isAuthenticated } = useAuth();
 
   const isChildRoute = location.pathname !== "/" && location.pathname !== "/blog" && location.pathname !== "/about" && location.pathname !== "/contact";
 
@@ -104,6 +106,15 @@ export default function Navbar() {
             >
               {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
+            {isAuthenticated && (
+              <Link
+                to="/settings"
+                className={`ml-1 p-2 rounded-lg border border-border/50 bg-secondary/50 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all ${location.pathname === "/settings" ? "text-primary border-primary/30" : ""}`}
+                title="Settings"
+              >
+                <UserCircle className="w-4 h-4" />
+              </Link>
+            )}
           </div>
 
           {/* Mobile toggle + search */}
