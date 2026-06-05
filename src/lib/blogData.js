@@ -1,3 +1,4 @@
+// Blog data — source of truth for all posts
 import { BLOG_POSTS_2 } from "./blogPosts2";
 
 const BLOG_POSTS_1 = [
