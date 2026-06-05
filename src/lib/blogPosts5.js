@@ -239,4 +239,108 @@ Then launch it and follow the guided prompts.
 - [ ] Create \`persistence.conf\` on the persistence partition
 - [ ] Reboot and select "Live with Persistence" from boot menu`
   },
+  {
+    id: "windows-sound-microphone-configuration-guide",
+    slug: "windows-sound-microphone-configuration-fix-audio-issues",
+    title: "Windows Sound & Microphone Configuration: The Complete Guide to Fix Audio Issues Fast",
+    excerpt: "Route audio to the right device, fix silent microphones, clear app permissions, and set correct defaults — the full Windows audio troubleshooting checklist.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Software",
+    tags: ["Windows", "Audio", "Microphone", "Troubleshooting", "Sound Settings", "Configuration"],
+    readTime: "5 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=60",
+    content: `## Windows Sound & Microphone Configuration
+
+Windows audio is modular, not magical. Once the correct device is selected, permissions are cleared, and defaults are enforced, sound behaves predictably. This guide covers every layer — from basic settings to the legacy control panel.
+
+---
+
+## Audio Output (Speakers / Headphones)
+
+**Objective:** Route system audio to the correct device.
+
+1. Open **Settings → System → Sound**
+2. Under **Output**, select your target device (speakers, headset, HDMI, USB DAC)
+3. Confirm **Volume** is non-zero and not muted
+4. Click **Device properties** to:
+   - Set balance (L/R)
+   - Disable enhancements if audio distortion occurs
+   - Verify format — **24-bit, 48 kHz** is stable for most setups
+
+---
+
+## Audio Input (Microphones)
+
+**Objective:** Ensure the correct mic is active and audible.
+
+1. Go to **Settings → System → Sound → Input**
+2. Select the intended microphone (USB mic, headset mic, webcam mic)
+3. Set **Input volume** to around **70–85%** as a starting point
+4. Click **Test your microphone** to confirm signal detection
+
+---
+
+## App-Level Microphone Permissions
+
+**Objective:** Remove privacy bottlenecks that silently block mic access.
+
+1. Navigate to **Settings → Privacy & security → Microphone**
+2. Ensure:
+   - **Microphone access** = ON
+   - **Let apps access your microphone** = ON
+3. Scroll down and individually enable access for apps like Zoom, Discord, and browsers
+
+---
+
+## Advanced Control Panel (Legacy but Critical)
+
+**Objective:** Fine-grained control and default device management.
+
+1. Press **Win + R**, type \`mmsys.cpl\`, press **Enter**
+
+### Playback Tab
+- Right-click your desired output device → **Set as Default**
+
+### Recording Tab
+- Right-click your microphone → **Set as Default**
+- Open **Properties → Levels** to boost mic gain
+- Disable **Exclusive Mode** if multiple apps are fighting for control
+
+### Set Default via Control Panel (Alternative)
+
+1. Select **Start → Control Panel**
+2. In the search box, type \`sound\` and select **Sound**
+3. On the **Playback** tab, select the correct audio device → click **Set Default** → **OK**
+
+---
+
+## Common Failure Modes & Fixes
+
+| Symptom | Fix |
+|---------|-----|
+| Mic detected but silent | Increase input level, check physical mute switch |
+| Wrong device auto-selected | Disable unused devices in Sound Control Panel |
+| Bluetooth audio sounds bad | Switch to non-hands-free profile in Bluetooth settings |
+| App hears nothing | Recheck app-specific mic permissions in Privacy settings |
+| Audio distortion | Disable audio enhancements in Device properties |
+
+---
+
+## Fast Verification Checklist
+
+- [ ] Correct input/output device selected
+- [ ] Volume levels set (non-zero, not muted)
+- [ ] App microphone permissions enabled
+- [ ] Default devices set in Sound Control Panel
+- [ ] No physical mute switches engaged
+- [ ] Exclusive Mode disabled if needed
+
+---
+
+## Summary
+
+This setup scales cleanly across headsets, USB mics, DACs, and HDMI audio paths. Work through each layer in order — Settings → Permissions → Control Panel — and the issue will surface at one of these checkpoints.`
+  },
 ];
