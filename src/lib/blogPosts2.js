@@ -928,6 +928,80 @@ Now boot from the second USB:
 Setting up TailsOS with persistent storage gives you a secure, portable, encrypted workspace you can take anywhere. Whether you're protecting sensitive research, managing crypto keys, or simply valuing privacy, this setup is one of the strongest operational security foundations you can build.`
   },
   {
+    id: "manually-update-snap-store-ubuntu",
+    slug: "manually-update-snap-store-ubuntu-20-04",
+    title: "Step-by-Step: Manually Update the Snap Store in Ubuntu Desktop 20.04.6",
+    excerpt: "You can manually update the Snap Store on Ubuntu 20.04.6 by fully stopping its background processes and then running a targeted refresh. The key is that the Snap Store often runs silently in the background.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Ubuntu", "Snap", "Linux", "Package Manager", "Desktop"],
+    readTime: "3 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=800&auto=format&fit=crop&q=60",
+    content: `You can manually update the Snap Store on Ubuntu 20.04.6 by fully stopping its background processes and then running a targeted refresh.
+
+The key is that the Snap Store often runs silently in the background, so you must terminate it before updating.
+
+## 1. Stop All Snap Store Processes
+
+The Snap Store frequently runs in the background even when the window is closed. You must terminate it first.
+
+**Option A — Cleanest method:**
+
+\`\`\`bash
+snap-store --quit
+\`\`\`
+
+If this works, proceed to the update step.
+
+**Option B — Force-kill the process:**
+
+If the above command reports that Snap Store is still running:
+
+\`\`\`bash
+pkill snap-store
+\`\`\`
+
+Or identify the exact process:
+
+\`\`\`bash
+ps aux | grep snap-store
+sudo kill <process_id>
+\`\`\`
+
+## 2. Refresh the Snap Store Manually
+
+Once all Snap Store processes are stopped:
+
+\`\`\`bash
+sudo snap refresh snap-store
+\`\`\`
+
+This forces an immediate update of only the Snap Store snap.
+
+## 3. (Optional) Update All Snaps
+
+If you want to update everything:
+
+\`\`\`bash
+sudo snap refresh
+\`\`\`
+
+## Quick Troubleshooting Tips
+
+- If \`snap-store --quit\` does nothing, use \`pkill snap-store\`
+- If \`snap refresh snap-store\` still complains about running apps, check for other snap processes:
+
+\`\`\`bash
+ps -ef | grep snap
+\`\`\`
+
+Then kill the listed PIDs.
+
+- After updating, the Snap Store may restart automatically.`
+  },
+  {
     id: "google-aluminum-os-android-pc",
     slug: "google-aluminum-os-android-pc-laptop-killer",
     title: "Google's Secret Weapon: Is \"Aluminum OS\" the End of the Laptop as We Know It?",
