@@ -1,5 +1,6 @@
 // Blog data — source of truth for all posts
 import { BLOG_POSTS_2 } from "./blogPosts2";
+import { BLOG_POSTS_4 } from "./blogPosts4";
 
 const BLOG_POSTS_1 = [
   {
@@ -1914,7 +1915,7 @@ The command line is the most direct, scriptable, and automation-friendly way to 
   },
 ];
 
-export const BLOG_POSTS = [...BLOG_POSTS_1, ...BLOG_POSTS_2, ...BLOG_POSTS_3];
+export const BLOG_POSTS = [...BLOG_POSTS_1, ...BLOG_POSTS_2, ...BLOG_POSTS_3, ...BLOG_POSTS_4];
 
 export const CATEGORIES = [
   { name: "All", count: BLOG_POSTS.length },
