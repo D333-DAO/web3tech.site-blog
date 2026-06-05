@@ -1,4 +1,4 @@
-const SITE_URL = 'https://blog.theweb3tech.com';
+const SITE_URL = 'https://theweb3tech.site';
 
 const BLOG_SLUGS = [
   // batch 1
