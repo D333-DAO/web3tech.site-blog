@@ -1571,6 +1571,118 @@ If your desktop environment crashes, TTY access lets you restart the display man
 Most modern Ubuntu systems use **F2 for GUI** and **F3–F6 for terminals**. Test different F-keys if the standard shortcuts don't work on your system.`
   },
   {
+    id: "restart-x-server-ubuntu",
+    slug: "restart-x-server-ubuntu-display-manager",
+    title: "Restart X Server on Ubuntu — Systemd, Service, and Kill Commands",
+    excerpt: "Fix frozen GUIs or display issues by restarting your X server. Learn four methods: systemctl, service command, process kill, and keyboard shortcuts.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Ubuntu", "X Server", "Display Manager", "Troubleshooting", "Terminal", "Linux", "System Management"],
+    readTime: "3 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=800&auto=format&fit=crop&q=60",
+    content: `## Restart X Server on Ubuntu
+
+When your GUI freezes, becomes unresponsive, or has display issues, restarting the X server often fixes the problem. Here are the most reliable methods.
+
+---
+
+## Method 1: Systemd Command (Recommended)
+
+The modern, system-wide approach for most Ubuntu installations:
+
+\`\`\`bash
+sudo systemctl restart display-manager
+\`\`\`
+
+This restarts the active display manager (GDM3, LightDM, SDDM, etc.) and will log you out cleanly.
+
+---
+
+## Method 2: Service Command (LightDM)
+
+If your system uses LightDM specifically:
+
+\`\`\`bash
+sudo service lightdm restart
+\`\`\`
+
+This is an older method but works reliably on systems running LightDM.
+
+---
+
+## Method 3: Kill the X Server Process
+
+For immediate, hard termination:
+
+\`\`\`bash
+sudo pkill X
+\`\`\`
+
+Or:
+
+\`\`\`bash
+sudo killall Xorg
+\`\`\`
+
+This forcefully terminates the X server process, which will restart automatically. Use this when systemctl commands don't work.
+
+---
+
+## Method 4: Keyboard Shortcut
+
+If enabled on your system:
+
+\`\`\`
+Ctrl + Alt + Backspace
+\`\`\`
+
+This immediately kills the X session. However, this shortcut is often disabled by default on modern Ubuntu systems.
+
+---
+
+## Using a Virtual Console
+
+If the GUI is completely frozen and shortcuts don't work:
+
+1. Press **Ctrl + Alt + F2** to switch to a terminal (TTY 2)
+2. Log in with your username and password
+3. Run one of the restart commands above:
+
+\`\`\`bash
+sudo systemctl restart display-manager
+\`\`\`
+
+4. Switch back to the GUI with **Ctrl + Alt + F1** or **Ctrl + Alt + F2**
+
+---
+
+## Important Note
+
+**Restarting the X server will:**
+- Close all open graphical applications without saving
+- Log you out of your session
+- Terminate any unsaved work
+
+Make sure to save important files before restarting.
+
+---
+
+## Quick Reference
+
+| Method | Command |
+|--------|---------|
+| Systemd (Recommended) | \`sudo systemctl restart display-manager\` |
+| LightDM Service | \`sudo service lightdm restart\` |
+| Kill X Process | \`sudo pkill X\` |
+| Kill Xorg | \`sudo killall Xorg\` |
+| Keyboard Shortcut | **Ctrl + Alt + Backspace** |
+| Via Console | Switch to TTY, then run restart command |
+
+Use the systemd method unless you have a specific reason not to. If that fails, switch to a virtual console and use \`pkill X\` or \`killall Xorg\` for a hard restart.`
+  },
+  {
     id: "send-crypto-command-line-cli-guide",
     slug: "send-crypto-command-line-cli-guide",
     title: "How to Send Crypto from the Command Line — Bitcoin, Monero, Ethereum, Kaspa & More",
