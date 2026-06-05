@@ -928,6 +928,107 @@ Now boot from the second USB:
 Setting up TailsOS with persistent storage gives you a secure, portable, encrypted workspace you can take anywhere. Whether you're protecting sensitive research, managing crypto keys, or simply valuing privacy, this setup is one of the strongest operational security foundations you can build.`
   },
   {
+    id: "iceriver-ks3m-step-up-transformer-guide",
+    slug: "best-step-up-transformer-iceriver-ks3m-miner",
+    title: "Best Step-Up Transformer for an IceRiver KS3M Miner",
+    excerpt: "The IceRiver KS3M pulls ~3200W peak and requires 180–285V AC. Here's exactly what transformer to buy, what circuit to run it on, and what to avoid.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Blockchain",
+    tags: ["IceRiver", "KS3M", "Mining", "Kaspa", "Power Supply", "Step-Up Transformer", "ASIC"],
+    readTime: "5 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop&q=60",
+    content: `The IceRiver KS3M pulls ~3200W peak and requires 180–285V AC input, which means if you're in the US on standard 110–120V power, you **must** use a true 3000W+ continuous-duty copper-coil step-up transformer. Here's the complete breakdown.
+
+## What You Need in a Step-Up Transformer
+
+### Power Rating
+
+The KS3M peaks at 3200W, so you need at minimum a **3000–5000W rated continuous-duty** unit. The sweet spot is a 4000–5000W transformer — it gives you headroom so the unit isn't running at 100% capacity 24/7.
+
+### Input / Output
+
+- **Input:** 110–120V (standard US outlet)
+- **Output:** 220–240V — this falls within the KS3M's 180–285V operating range
+
+### Coil Type
+
+**Copper coil only.** Avoid aluminum-coil transformers — they run hotter, degrade faster, and are not suitable for continuous 24/7 ASIC loads.
+
+### Features to Look For
+
+- Built-in circuit breaker or fuse
+- Grounded outlets
+- Metal case with ventilation
+- Continuous-duty rating (not "peak" or "surge")
+
+---
+
+## Top Transformer Recommendations
+
+### 1. LiteFuze LT-3000 — Best Overall
+
+- True continuous-duty rated
+- Copper toroidal coil (runs cooler than standard E-I core)
+- Built-in breaker protection
+- Very stable output voltage
+
+**→ Safest long-term choice for a KS3M running 24/7**
+
+### 2. Yinleader 3000W — Best Budget Option
+
+- Copper coil
+- Good thermal protection
+- Solid reliability for the price
+
+**→ Cheapest option worth trusting with an ASIC miner**
+
+### 3. Simran AC-3000 — Heavy-Duty Option
+
+- CE certified
+- Strong metal housing
+- Handles heat well under sustained load
+
+**→ Good pick if your mining room runs warm**
+
+---
+
+## What Circuit to Run It On
+
+On 120V input, a 3200W load draws approximately:
+
+\`\`\`
+I = P / V = 3200 / 120 ≈ 26.7A
+\`\`\`
+
+That means:
+
+- **Best:** A dedicated **30A 120V circuit** feeding the step-up transformer
+- **Bare minimum:** A 20A circuit will be consistently overloaded — don't do it
+
+**One KS3M → one transformer → one dedicated circuit.** Don't share the circuit with other loads.
+
+---
+
+## Important Warnings
+
+- **Do NOT use anything under 3000W** — undersized transformers overheat and fail
+- **Avoid aluminum-coil transformers** — they are not rated for continuous ASIC duty
+- **Give it airflow** — these transformers run hot under sustained load; don't box them in
+- **One transformer per miner** is strongly recommended
+
+---
+
+## Quick Spec Search Reference
+
+If you're searching online, look for something matching:
+
+> "3000W–5000W Step Up Transformer, 110V to 220V, Copper Coil, Continuous Duty, Circuit Breaker"
+
+Any unit hitting all five of those criteria will safely run a KS3M long-term.`
+  },
+  {
     id: "rufus-access-denied-iso-extraction-fix",
     slug: "rufus-access-denied-iso-extraction-failure-fix",
     title: "Rufus Errors Fixed: \"Access to the Drive is Denied\" & \"ISO Image Extraction Failure\"",
