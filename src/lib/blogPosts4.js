@@ -155,6 +155,165 @@ The difference is subtle—\`su -\` is generally preferred because it fully load
 - Keep sudo access auditable by using it instead of direct root login`
   },
   {
+    id: "ai-website-github-pages-deploy",
+    slug: "ai-generated-website-github-pages-deploy-guide",
+    title: "AI-Generated Site → GitHub → GitHub Pages: The Lean Deployment Pipeline",
+    excerpt: "Generate a website with AI, push it to GitHub, and deploy it live in minutes. Free hosting, version control, global CDN — and optionally connect a Web3 domain.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Software",
+    tags: ["GitHub Pages", "AI", "Web Development", "Static Site", "HTML", "Tailwind", "Deployment", "Web3"],
+    readTime: "7 min read",
+    featured: true,
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=60",
+    content: `## AI-Generated Site → GitHub → GitHub Pages
+
+Clean pipeline. Let's execute.
+
+---
+
+## Phase 1: Generate the Website with AI
+
+You have three high-efficiency routes.
+
+### Option A — Use AI to Generate Raw HTML (Most Control)
+
+Prompt an AI like this:
+
+> *"Create a modern responsive static website in pure HTML, CSS, and minimal JavaScript for a [niche]. Include a hero section, features section, CTA, and footer. Use clean semantic markup. No external dependencies."*
+
+**Key requirement — static files only:**
+- No server code
+- No Node runtime
+- No databases
+
+GitHub Pages only supports static hosting.
+
+**Deliverables you need:**
+
+\`\`\`
+index.html
+style.css
+script.js (optional)
+\`\`\`
+
+### Option B — Use an AI Website Builder That Exports Static Files
+
+Use platforms like:
+- **Durable**
+- **Framer** (export plan required)
+- **Webflow** (export plan required)
+
+Export the ZIP. Extract files. Ensure \`index.html\` is in the root folder.
+
+### Option C — Generate with AI + Tailwind (Modern Look)
+
+Prompt for vanilla HTML with Tailwind CDN — GitHub Pages supports CDN links fine.
+
+Add this to your \`<head>\`:
+
+\`\`\`html
+<script src="https://cdn.tailwindcss.com"></script>
+\`\`\`
+
+This gives you a fully modern, responsive design with zero build step.
+
+---
+
+## Phase 2: Push to GitHub
+
+### 1. Create the Repository
+
+1. Go to **GitHub** → click **New Repository**
+2. Name it (e.g., \`mywebsite\`)
+3. Set to **Public** — required for free GitHub Pages
+
+### 2. Upload Your Files
+
+Inside the repo:
+
+1. Click **Add file → Upload files**
+2. Upload your files:
+
+\`\`\`
+index.html
+style.css
+assets/
+\`\`\`
+
+3. Click **Commit changes**
+
+---
+
+## Phase 3: Enable GitHub Pages
+
+1. Go to your repo → **Settings → Pages**
+2. Under **Source**, select: **Deploy from branch**
+3. Branch: **main** — Folder: **/ (root)**
+4. Click **Save**
+
+GitHub generates your live URL:
+
+\`\`\`
+https://yourusername.github.io/reponame
+\`\`\`
+
+Deployment usually takes **1–2 minutes**.
+
+---
+
+## Optional: Connect an Unstoppable Domain
+
+If you have a Web3 domain (e.g., \`yourdomain.crypto\`):
+
+### In GitHub Pages Settings
+
+Add a **Custom Domain**:
+
+\`\`\`
+yourdomain.crypto
+\`\`\`
+
+### In Unstoppable Domains
+
+Add DNS A records pointing to GitHub Pages IPs:
+
+\`\`\`
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+\`\`\`
+
+This bridges your **Web3 domain → GitHub static hosting**.
+
+---
+
+## What This Architecture Gives You
+
+| Benefit | Details |
+|---------|---------|
+| Free hosting | GitHub Pages is completely free |
+| Version control | Full Git history for every change |
+| Global CDN | GitHub's infrastructure serves files worldwide |
+| AI-generated content | Zero design cost |
+| Zero server maintenance | No backend, no uptime monitoring |
+| Custom domain support | Including Web3 domains |
+
+---
+
+## Quick Checklist
+
+- [ ] AI generates \`index.html\`, \`style.css\`, optional \`script.js\`
+- [ ] Create a public GitHub repo
+- [ ] Upload files to root of repo
+- [ ] Enable GitHub Pages → Deploy from main branch
+- [ ] Test live URL (\`yourusername.github.io/reponame\`)
+- [ ] (Optional) Add custom domain
+
+This is lean tech infrastructure — free, fast, and fully version-controlled.`
+  },
+  {
     id: "restart-x-server-ubuntu",
     slug: "restart-x-server-ubuntu-display-manager",
     title: "Restart X Server on Ubuntu — Systemd, Service, and Kill Commands",
