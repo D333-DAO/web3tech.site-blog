@@ -1,6 +1,197 @@
 // Blog posts 4 — additional system administration and security guides
 export const BLOG_POSTS_4 = [
   {
+    id: "format-ssd-debian-linux-ext4",
+    slug: "format-ssd-debian-linux-ext4-gparted-cli",
+    title: "How to Format an SSD for Linux Debian — GParted & Command Line Guide",
+    excerpt: "Format an SSD on Debian using ext4 via GParted (GUI) or the terminal. Covers partition tables, TRIM for SSD longevity, and automatic mounting with fstab.",
+    date: "2026-06-05",
+    author: "Derrk Samuel",
+    category: "Linux",
+    tags: ["Debian", "Linux", "SSD", "Format", "GParted", "ext4", "fstab", "Disk Management"],
+    readTime: "7 min read",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1629654291663-b91ad427698f?w=800&auto=format&fit=crop&q=60",
+    content: `## Format an SSD for Linux Debian
+
+To format an SSD for a Linux Debian system, **ext4** is the standard and most reliable file system choice. You can do this using a graphical interface or the command line.
+
+---
+
+## Method 1: Using GParted (GUI)
+
+GParted is the most user-friendly way to manage partitions in Debian.
+
+### Install GParted
+
+\`\`\`bash
+sudo apt install gparted
+\`\`\`
+
+### Steps
+
+**1. Launch & Select Drive**
+Open GParted from your application menu. In the top-right corner, select your SSD (e.g., \`/dev/sdb\`).
+
+**2. Create Partition Table**
+If the drive is new, go to **Device → Create Partition Table**. Select **GPT** (recommended for modern SSDs).
+
+**3. Create New Partition**
+Right-click the unallocated space and select **New**. Set the file system to **ext4** and click **Add**.
+
+**4. Apply Changes**
+Click the **Checkmark (Apply All Operations)** in the toolbar to format the drive.
+
+---
+
+## Method 2: Using the Command Line (Terminal)
+
+This method is faster for users comfortable with the terminal.
+
+### 1. Identify the Drive
+
+\`\`\`bash
+lsblk
+\`\`\`
+
+Or for more detail:
+
+\`\`\`bash
+sudo fdisk -l
+\`\`\`
+
+Find your SSD's identifier (e.g., \`/dev/sdb\`).
+
+### 2. Create a Partition
+
+Use \`cfdisk\` for a simple text-based interface:
+
+\`\`\`bash
+sudo cfdisk /dev/sdX
+\`\`\`
+
+Replace \`X\` with your drive letter. Select **gpt**, then **New**, then **Write**, then **Quit**.
+
+### 3. Format to ext4
+
+Once the partition is created (e.g., \`/dev/sdb1\`):
+
+\`\`\`bash
+sudo mkfs.ext4 /dev/sdX1
+\`\`\`
+
+### 4. Mount the Drive
+
+Create a mount point and mount it:
+
+\`\`\`bash
+sudo mkdir /mnt/newssd
+sudo mount /dev/sdX1 /mnt/newssd
+\`\`\`
+
+---
+
+## SSD-Specific Tips for Debian
+
+### Enable TRIM
+
+TRIM maintains SSD performance over time. Enable it with:
+
+\`\`\`bash
+sudo systemctl enable --now fstrim.timer
+\`\`\`
+
+### noatime Option
+
+To reduce write wear, add \`noatime\` when mounting or in your fstab entry:
+
+\`\`\`
+UUID=your-uuid /mnt/myssd ext4 defaults,noatime,nofail 0 2
+\`\`\`
+
+---
+
+## Set Up Automatic Mounting (fstab)
+
+To make the drive mount automatically at every boot, add it to \`/etc/fstab\`.
+
+### Step 1: Create a Mount Point
+
+\`\`\`bash
+sudo mkdir /mnt/myssd
+\`\`\`
+
+### Step 2: Get the SSD's UUID
+
+\`\`\`bash
+sudo blkid /dev/sdX1
+\`\`\`
+
+Copy the UUID — it looks like \`550e8400-e29b-41d4-a716-446655440000\`.
+
+Using UUID is safer than using \`/dev/sdX\` because it stays consistent even if the drive is connected to a different port.
+
+### Step 3: Edit /etc/fstab
+
+Back up your fstab first:
+
+\`\`\`bash
+sudo cp /etc/fstab /etc/fstab.bak
+\`\`\`
+
+Open it with nano:
+
+\`\`\`bash
+sudo nano /etc/fstab
+\`\`\`
+
+Add a new line at the end:
+
+\`\`\`
+UUID=your-uuid-here /mnt/myssd ext4 defaults,nofail 0 2
+\`\`\`
+
+> **Note:** \`nofail\` ensures your system still boots normally even if the SSD is unplugged.
+
+### Step 4: Test the Configuration
+
+\`\`\`bash
+sudo mount -a
+\`\`\`
+
+If no errors appear, the drive is correctly configured to auto-mount on every boot.
+
+---
+
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| List drives | \`lsblk\` or \`sudo fdisk -l\` |
+| Partition drive | \`sudo cfdisk /dev/sdX\` |
+| Format as ext4 | \`sudo mkfs.ext4 /dev/sdX1\` |
+| Mount manually | \`sudo mount /dev/sdX1 /mnt/myssd\` |
+| Get UUID | \`sudo blkid /dev/sdX1\` |
+| Enable TRIM | \`sudo systemctl enable --now fstrim.timer\` |
+| Test fstab | \`sudo mount -a\` |
+
+---
+
+## Set Permissions for Your User (Optional)
+
+If you want your standard user account (not just root) to write files to the drive:
+
+\`\`\`bash
+sudo chown -R $USER:$USER /mnt/myssd
+\`\`\`
+
+Or set open permissions:
+
+\`\`\`bash
+sudo chmod 775 /mnt/myssd
+\`\`\``
+  },
+  {
     id: "change-root-password-switch-accounts-ubuntu",
     slug: "change-root-password-switch-accounts-ubuntu-server",
     title: "Change Root Password & Switch Accounts on Ubuntu Server",
