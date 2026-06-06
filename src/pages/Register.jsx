@@ -86,9 +86,15 @@ export default function Register() {
           <InputOTP
             maxLength={6}
             value={otpCode}
-            onChange={setOtpCode}
+            onChange={(val) => {
+              setOtpCode(val);
+              if (val.length === 6) {
+                setTimeout(() => handleVerify(), 100);
+              }
+            }}
             autoFocus
             autoComplete="one-time-code"
+            onKeyDown={(e) => { if (e.key === "Enter" && otpCode.length === 6) handleVerify(); }}
           >
             <InputOTPGroup>
               <InputOTPSlot index={0} />
