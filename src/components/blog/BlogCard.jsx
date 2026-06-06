@@ -18,10 +18,9 @@ export default function BlogCard({ post, index = 0, variant = "default", onTagCl
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay: Math.min(index, 5) * 0.06 }}
     >
       <Link
         to={`/blog/${post.slug}`}
@@ -34,6 +33,8 @@ export default function BlogCard({ post, index = 0, variant = "default", onTagCl
           <img
             src={post.image}
             alt={post.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />

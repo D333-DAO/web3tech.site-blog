@@ -70,6 +70,9 @@ export default function BlogPost() {
         <img
           src={post.image}
           alt={post.title}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -128,7 +131,7 @@ export default function BlogPost() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.15, duration: 0.5 }}
+          transition={{ delay: 0.05, duration: 0.25 }}
           className="prose prose-invert prose-sm md:prose-base max-w-none
             prose-headings:font-bold prose-headings:text-foreground
             prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3 prose-h2:border-b prose-h2:border-border prose-h2:pb-2

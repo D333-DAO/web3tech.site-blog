@@ -10,6 +10,9 @@ export default function HeroSection() {
         <img
           src="https://media.base44.com/images/public/6a112c3e2737801908a7c002/95d090739_generated_3e2dffc5.png"
           alt="Tech hero background"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="w-full h-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
@@ -23,7 +26,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono mb-8">
             <Zap className="w-3 h-3" />
