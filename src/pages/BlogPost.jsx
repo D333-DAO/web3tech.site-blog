@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { BLOG_POSTS, AUTHOR } from "@/lib/blogData";
 import CommentSection from "@/components/blog/CommentSection";
 import ShareButtons from "@/components/blog/ShareButtons";
+import RelatedArticles from "@/components/blog/RelatedArticles";
 import ReactMarkdown from "react-markdown";
 
 const categoryColors = {
@@ -171,6 +172,9 @@ export default function BlogPost() {
             </div>
           </div>
         </div>
+
+        {/* Related Articles */}
+        <RelatedArticles currentPost={post} />
 
         {/* Comments */}
         <div className="mt-10">
