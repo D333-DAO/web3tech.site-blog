@@ -78,7 +78,7 @@ export default function Blog() {
             onOpenChange={setDrawerOpen}
             title="Filter by Category"
             trigger={
-              <Button variant="outline" size="icon" className="md:hidden select-none [-webkit-user-select:none] flex-shrink-0">
+              <Button variant="outline" size="icon" className="lg:hidden select-none [-webkit-user-select:none] flex-shrink-0">
                 <SlidersHorizontal className="w-4 h-4" />
               </Button>
             }
@@ -94,12 +94,12 @@ export default function Blog() {
             ))}
           </MobileDrawerSelect>
         </div>
-        {/* Desktop category filter */}
-        <div className="hidden md:block">
+        {/* Desktop category filter (lg+) */}
+        <div className="hidden lg:block">
           <CategoryFilter activeCategory={activeCategory} onCategoryChange={(cat) => { setActiveCategory(cat); setActiveTag(null); }} />
         </div>
         {/* Mobile: show active category pill */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           {activeCategory !== "All" && (
             <button
               onClick={() => setActiveCategory("All")}
@@ -128,7 +128,7 @@ export default function Blog() {
         {/* Posts grid */}
         <div className="flex-1 min-w-0">
           {filteredPosts.length > 0 ? (
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredPosts.map((post, i) => (
                 <BlogCard key={post.id} post={post} index={i} onTagClick={setActiveTag} />
               ))}
@@ -141,8 +141,8 @@ export default function Blog() {
           )}
         </div>
 
-        {/* Sidebar */}
-        <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-24">
+        {/* Sidebar: hidden on mobile/tablet, visible on large screens */}
+        <aside className="hidden xl:block w-64 flex-shrink-0 sticky top-24">
           <NewsletterWidget />
         </aside>
       </div>

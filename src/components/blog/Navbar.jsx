@@ -22,7 +22,8 @@ export default function Navbar() {
   const { theme, toggle } = useTheme();
   const { isAuthenticated } = useAuth();
 
-  const isChildRoute = location.pathname !== "/" && location.pathname !== "/blog" && location.pathname !== "/about" && location.pathname !== "/contact";
+  // Show back button on sub-pages (blog posts, etc.)
+  const isChildRoute = location.pathname !== "/" && location.pathname !== "/blog" && location.pathname !== "/about" && location.pathname !== "/contact" && location.pathname !== "/settings";
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -56,7 +57,7 @@ export default function Navbar() {
           {isChildRoute && (
             <button
               onClick={handleBack}
-              className="md:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground select-none [-webkit-user-select:none] mr-1"
+              className="lg:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground select-none [-webkit-user-select:none] mr-1"
               aria-label="Go back"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -72,8 +73,8 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop links shown at lg+ (1024px). Tablets get the bottom nav. */}
+          <div className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => 
               link.external ? (
                 <a
@@ -125,8 +126,8 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile toggle + search */}
-          <div className="md:hidden flex items-center gap-2">
+          {/* Mobile + tablet controls (below lg) */}
+          <div className="lg:hidden flex items-center gap-2">
             <button
               onClick={toggle}
               className="p-2 text-muted-foreground hover:text-foreground"
@@ -156,7 +157,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-card border-b border-border"
+            className="lg:hidden bg-card border-b border-border"
           >
             <div className="px-4 py-3 space-y-1">
               {NAV_LINKS.map((link) =>

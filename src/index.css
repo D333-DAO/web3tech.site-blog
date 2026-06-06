@@ -121,11 +121,25 @@
   body {
     @apply bg-background text-foreground;
     overscroll-behavior-y: none;
+    /* Ensure correct rendering on high-DPI displays (tablets, XR, ChromeOS) */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Safe area insets for notched phones, ChromeOS, foldables */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 
   button, a, nav {
     user-select: none;
     -webkit-user-select: none;
+    /* Prevent 300ms tap delay on touch devices (tablets, ChromeOS touch) */
+    touch-action: manipulation;
+  }
+
+  /* Allow text selection in content areas */
+  p, h1, h2, h3, h4, h5, h6, li, blockquote, td, th, code, pre {
+    user-select: text;
+    -webkit-user-select: text;
   }
 }
 

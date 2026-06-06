@@ -54,6 +54,7 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* Responsive grid: 1 col mobile → 2 col tablet → 4 col desktop */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {latestPosts.map((post, i) => (
             <BlogCard key={post.id} post={post} index={i} />
@@ -75,7 +76,7 @@ export default function Home() {
                 href="https://web3tech.site"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors touch-manipulation"
               >
                 Visit The Web3 Tech Blog
               </a>
