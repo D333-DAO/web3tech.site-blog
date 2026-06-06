@@ -60,28 +60,29 @@ export default function Blog() {
         </p>
       </motion.div>
 
-      {/* Search Bar — Full Width */}
-      <div className="relative mb-6">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-        <Input
-          placeholder="Search articles by title, tag, or keyword..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-12 pr-4 h-12 text-base bg-secondary border-border rounded-xl focus:ring-2 focus:ring-primary/30"
-        />
-        {searchQuery && (
-          <button
-            onClick={() => setSearchQuery("")}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground text-sm"
-          >
-            ✕
-          </button>
-        )}
-      </div>
+      {/* Sticky search + filters bar */}
+      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm pb-4 pt-2 -mx-4 sm:-mx-6 px-4 sm:px-6 border-b border-border/40 mb-8">
+        {/* Search Bar */}
+        <div className="relative mb-3">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+          <Input
+            placeholder="Search articles by title, tag, or keyword..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-12 pr-4 h-11 text-base bg-secondary border-border rounded-xl focus:ring-2 focus:ring-primary/30"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground text-sm"
+            >
+              ✕
+            </button>
+          )}
+        </div>
 
-      {/* Filters */}
-      <div className="space-y-4 mb-8">
-        <div className="flex gap-2">
+        {/* Filters */}
+        <div className="flex items-center gap-2 flex-wrap">
           {/* Mobile filter drawer trigger */}
           <MobileDrawerSelect
             open={drawerOpen}
@@ -103,21 +104,21 @@ export default function Blog() {
               />
             ))}
           </MobileDrawerSelect>
-        </div>
-        {/* Desktop category filter (lg+) */}
-        <div className="hidden lg:block">
-          <CategoryFilter activeCategory={activeCategory} onCategoryChange={(cat) => { setActiveCategory(cat); setActiveTag(null); }} />
-        </div>
-        {/* Mobile: show active category pill */}
-        <div className="lg:hidden">
-          {activeCategory !== "All" && (
-            <button
-              onClick={() => setActiveCategory("All")}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium select-none"
-            >
-              {activeCategory} ×
-            </button>
-          )}
+          {/* Mobile: active category pill */}
+          <div className="lg:hidden">
+            {activeCategory !== "All" && (
+              <button
+                onClick={() => setActiveCategory("All")}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium select-none"
+              >
+                {activeCategory} ×
+              </button>
+            )}
+          </div>
+          {/* Desktop category filter */}
+          <div className="hidden lg:block">
+            <CategoryFilter activeCategory={activeCategory} onCategoryChange={(cat) => { setActiveCategory(cat); setActiveTag(null); }} />
+          </div>
         </div>
       </div>
 
