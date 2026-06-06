@@ -888,16 +888,49 @@ Your earnings depend heavily on:
 
 ---
 
+## 🔍 Verdict: Big Airdrop Coming or Crypto Scheme?
+
+This is the question that matters most — so here's an honest breakdown using current data.
+
+### 🟢 Signs It's Legitimate
+
+- **Real VC backing** — Polychain Capital and Tribe Capital invested $10M+. Top-tier funds that do serious due diligence.
+- **Airdrop 1 already happened** — On October 28, 2024, 100 million GRASS tokens were distributed to 2M+ users, verifiable on-chain. Pure schemes rarely complete real airdrops.
+- **2.5 million active nodes** — Real infrastructure, not just a website and a promise.
+- **Season 2 Airdrop is coming** — Season 2 is expected to distribute **170 million GRASS tokens** throughout H2 2026. Community epoch tracking points to around **July 2026** for the next drop.
+- **Real revenue model** — Grass sells public web data (scraped via user bandwidth) to AI companies for training data. An actual product is being sold, not just token speculation.
+
+### 🔴 Red Flags to Watch
+
+- **Token price has dropped hard** — GRASS has fallen to the **$0.30–$0.57 range** (as of mid-2026) from higher post-airdrop levels. A whale moved 3.82M GRASS to exchanges in June 2026 — a classic exit signal at an estimated **$4.2M loss**, meaning early investors are bailing.
+- **Token unlock pressure** — Season 2 airdrop supply flooding in combined with scheduled unlocks is suppressing price. Community consensus puts near-term range at **$0.20–$0.50** until supply stabilizes.
+- **US/Canada delayed eligibility** — Users in these regions have had staggered or delayed access to distributions, frustrating a large chunk of the user base.
+- **Community frustration** — Trustpilot and Reddit show complaints about payout delays and unclear reward calculations. Common DePIN growing pains — but worth knowing.
+
+### 🟡 The Honest Takeaway
+
+**It is not a scam.** The infrastructure is real, the first airdrop happened on-chain, and the backers are credible.
+
+**But it is not a guaranteed windfall.** GRASS has been under heavy selling pressure through 2026. If Season 2 distributes 170M tokens into a weak market, that's significant dilution pressure.
+
+**Best-case scenario:** Season 2 launches in July 2026, the AI narrative heats back up (GRASS led the AI token sector rally in May 2026 with **+119% weekly gains**), and accumulated points translate into a meaningful allocation.
+
+**Realistic scenario:** Token price stays suppressed through unlocks. Season 2 tokens arrive, most recipients sell immediately, and GRASS trades sideways in the $0.20–$0.60 range unless new demand enters.
+
+**Bottom line** — Run Grass on a spare machine if you have one. The downside is electricity and a bit of bandwidth. The upside is a real, if uncertain, token allocation from a legitimate project with a large scheduled airdrop ahead. Do not buy GRASS on the open market expecting quick gains.
+
+---
+
 ## Summary
 
-Grass is one of the more legitimate DePIN projects to emerge from the 2024–2025 cycle. With 8.5M+ users, real VC backing, an active Solana-based token, and transparent airdrop mechanics, it's worth considering if you want a zero-effort passive crypto strategy.
+Grass clears the legitimacy bar — verifiable airdrop history, real VC backing, 2.5M+ active nodes, and a Season 2 drop (170M tokens, likely July 2026) on the way. It is not a scheme.
 
-The ask is minimal — install an app, leave it running, earn points. The upside is real but uncertain, as with any early-stage token. The downside risk is low if you stick to a secondary device and read the privacy policy.
+The ask is minimal: install an app, leave it running, earn points. Manage your expectations on token price, stay patient through the unlock pressure, and treat any payout as a bonus rather than guaranteed income.
 
 **Links:**
 - Website: [grass.io](https://www.grass.io)
 - Foundation: [grassfoundation.io](https://www.grassfoundation.io)
 - Dashboard: [app.grass.io](https://app.grass.io)
-- Docs: [grass-foundation.gitbook.io/grass-docs](https://grass-foundation.gitbook.io/grass-docs)`
+- Docs: [grass-foundation.gitbook.io/grass-docs](https://grass-foundation.gitbook.io/grass-docs)\``
   },
 ];
