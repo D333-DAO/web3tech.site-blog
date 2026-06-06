@@ -21,10 +21,10 @@ export default function Contact() {
           <div>
             <h2 className="font-heading font-semibold text-sm mb-1">Email</h2>
             <a
-              href="mailto:contact@theweb3tech.com"
+              href="mailto:contact@web3tech.site"
               className="text-primary hover:underline text-sm"
             >
-              contact@theweb3tech.com
+              contact@web3tech.site
             </a>
             <p className="text-xs text-muted-foreground mt-1">
               Best for article feedback, partnership requests, or content corrections.
@@ -37,13 +37,13 @@ export default function Contact() {
           <h2 className="font-heading font-semibold text-sm mb-4">Find Us Online</h2>
           <div className="space-y-3">
             <a
-              href="https://theweb3tech.site"
+              href="https://web3tech.site"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <ExternalLink className="w-4 h-4 text-primary flex-shrink-0" />
-              The Web3 Tech Blog — theweb3tech.site
+              The Web3 Tech Blog — web3tech.site
             </a>
             <a
               href="https://techderksinsights.blogspot.com"

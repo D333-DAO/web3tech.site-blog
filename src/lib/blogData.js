@@ -1938,7 +1938,7 @@ export const AUTHOR = {
   name: "Derrk Samuel",
   bio: "Web3, crypto, and Linux PC insights — practical guides, security tips, mining setups, blockchain tools, and decentralized tech strategies for techs.",
   blogs: [
-    { name: "The Web3 Tech", url: "https://theweb3tech.site" },
+    { name: "The Web3 Tech", url: "https://web3tech.site" },
     { name: "TechDerks Insights", url: "https://techderksinsights.blogspot.com" }
   ]
 };

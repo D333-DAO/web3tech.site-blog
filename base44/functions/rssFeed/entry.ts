@@ -1,7 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
-const SITE_URL = 'https://theweb3tech.site';
-const SITE_TITLE = 'TheWeb3Tech — Web3, Crypto & Linux Insights';
+const SITE_URL = 'https://web3tech.site';
+const SITE_TITLE = 'Web3Tech — Web3, Crypto & Linux Insights';
 const SITE_DESCRIPTION = 'Web3, crypto, and Linux PC insights — practical guides, security tips, mining setups, blockchain tools, and decentralized tech strategies for techs.';
 const AUTHOR_NAME = 'Derrk Samuel';
 
@@ -103,7 +103,7 @@ ${cats}
     <language>en-us</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
     <managingEditor>${escapeXml(AUTHOR_NAME)}</managingEditor>
-    <generator>TheWeb3Tech RSS Generator</generator>
+    <generator>Web3Tech RSS Generator</generator>
     <atom:link href="${SITE_URL}/api/rssFeed" rel="self" type="application/rss+xml"/>
 ${items}
   </channel>
