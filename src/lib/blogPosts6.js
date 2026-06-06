@@ -931,6 +931,6 @@ The ask is minimal: install an app, leave it running, earn points. Manage your e
 - Website: [grass.io](https://www.grass.io)
 - Foundation: [grassfoundation.io](https://www.grassfoundation.io)
 - Dashboard: [app.grass.io](https://app.grass.io)
-- Docs: [grass-foundation.gitbook.io/grass-docs](https://grass-foundation.gitbook.io/grass-docs)\``
+- Docs: [grass-foundation.gitbook.io/grass-docs](https://grass-foundation.gitbook.io/grass-docs)`
   },
 ];
