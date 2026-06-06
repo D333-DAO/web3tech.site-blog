@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
+import { useAuth } from "@/lib/AuthContext";
 import { MessageSquare, Send, Reply, ChevronDown, ChevronUp, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -170,6 +171,7 @@ export default function CommentSection({ postSlug }) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [myIds, setMyIds] = useState(() => getMyCommentIds());
+  const { user } = useAuth();
 
   const fetchComments = async () => {
     const data = await base44.entities.Comment.filter({ post_slug: postSlug }, "created_date", 100);
@@ -255,7 +257,7 @@ export default function CommentSection({ postSlug }) {
                 onReplySubmit={handleSubmit}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
-                isOwn={myIds.includes(comment.id)}
+                isOwn={myIds.includes(comment.id) || (user && comment.created_by_id && comment.created_by_id === user.id)}
               />
             ))}
           </div>
