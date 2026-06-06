@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { MessageSquare, Send, Reply, ChevronDown, ChevronUp } from "lucide-react";
+import { MessageSquare, Send, Reply, ChevronDown, ChevronUp, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 
-function CommentForm({ postSlug, parentId = null, onSubmit, onCancel, compact = false }) {
-  const [name, setName] = useState("");
+// Track IDs of comments posted in this session so the user can edit/delete them
+function getMyCommentIds() {
+  try { return JSON.parse(sessionStorage.getItem("myCommentIds") || "[]"); } catch { return []; }
+}
+function addMyCommentId(id) {
+  const ids = getMyCommentIds();
+  if (!ids.includes(id)) {
+    sessionStorage.setItem("myCommentIds", JSON.stringify([...ids, id]));
+  }
+}
+function removeMyCommentId(id) {
+  sessionStorage.setItem("myCommentIds", JSON.stringify(getMyCommentIds().filter((x) => x !== id)));
+}
+
+function CommentForm({ postSlug, parentId = null, onSubmit, onCancel, compact = false, initialName = "", initialContent = "", submitLabel }) {
+  const [name, setName] = useState(initialName);
   const [email, setEmail] = useState("");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(initialContent);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -18,28 +32,30 @@ function CommentForm({ postSlug, parentId = null, onSubmit, onCancel, compact = 
     if (!name.trim() || !content.trim()) return;
     setLoading(true);
     await onSubmit({ author_name: name.trim(), author_email: email.trim(), content: content.trim(), post_slug: postSlug, parent_id: parentId || null });
-    setName(""); setEmail(""); setContent("");
+    if (!initialContent) { setName(""); setEmail(""); setContent(""); }
     setLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
-      <div className={`grid gap-3 ${compact ? "" : "sm:grid-cols-2"}`}>
-        <Input
-          placeholder="Your name *"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          className="bg-secondary/50 border-border/50 text-sm"
-        />
-        <Input
-          placeholder="Email (optional, not shown)"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="bg-secondary/50 border-border/50 text-sm"
-        />
-      </div>
+      {!initialContent && (
+        <div className={`grid gap-3 ${compact ? "" : "sm:grid-cols-2"}`}>
+          <Input
+            placeholder="Your name *"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="bg-secondary/50 border-border/50 text-sm"
+          />
+          <Input
+            placeholder="Email (optional, not shown)"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="bg-secondary/50 border-border/50 text-sm"
+          />
+        </div>
+      )}
       <Textarea
         placeholder={compact ? "Write a reply..." : "Share your thoughts, questions, or feedback..."}
         value={content}
@@ -56,16 +72,28 @@ function CommentForm({ postSlug, parentId = null, onSubmit, onCancel, compact = 
         )}
         <Button type="submit" size="sm" disabled={loading || !name.trim() || !content.trim()} className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2">
           <Send className="w-3 h-3" />
-          {loading ? "Posting..." : compact ? "Reply" : "Post Comment"}
+          {loading ? "Saving..." : submitLabel || (compact ? "Reply" : "Post Comment")}
         </Button>
       </div>
     </form>
   );
 }
 
-function CommentItem({ comment, replies, postSlug, onReplySubmit }) {
+function CommentItem({ comment, replies, postSlug, onReplySubmit, onDelete, onEdit, isOwn }) {
   const [showReply, setShowReply] = useState(false);
   const [showReplies, setShowReplies] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [editContent, setEditContent] = useState(comment.content);
+  const [editLoading, setEditLoading] = useState(false);
+
+  const handleEditSave = async (e) => {
+    e.preventDefault();
+    if (!editContent.trim()) return;
+    setEditLoading(true);
+    await onEdit(comment.id, editContent.trim());
+    setEditing(false);
+    setEditLoading(false);
+  };
 
   return (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="group">
@@ -81,15 +109,56 @@ function CommentItem({ comment, replies, postSlug, onReplySubmit }) {
             <span className="text-xs text-muted-foreground">
               {format(new Date(comment.created_date), "MMM d, yyyy 'at' h:mm a")}
             </span>
+            {isOwn && !editing && (
+              <span className="ml-auto flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  onClick={() => { setEditing(true); setEditContent(comment.content); }}
+                  className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors px-1.5 py-0.5 rounded hover:bg-primary/10"
+                  title="Edit comment"
+                >
+                  <Pencil className="w-3 h-3" /> Edit
+                </button>
+                <button
+                  onClick={() => onDelete(comment.id)}
+                  className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive transition-colors px-1.5 py-0.5 rounded hover:bg-destructive/10"
+                  title="Delete comment"
+                >
+                  <Trash2 className="w-3 h-3" /> Delete
+                </button>
+              </span>
+            )}
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed mb-2">{comment.content}</p>
-          <button
-            onClick={() => setShowReply(!showReply)}
-            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
-          >
-            <Reply className="w-3 h-3" />
-            Reply
-          </button>
+
+          {editing ? (
+            <form onSubmit={handleEditSave} className="space-y-2 mb-2">
+              <Textarea
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+                rows={3}
+                autoFocus
+                className="bg-secondary/50 border-border/50 text-sm resize-none"
+              />
+              <div className="flex gap-2 justify-end">
+                <Button type="button" variant="ghost" size="sm" onClick={() => setEditing(false)} className="text-muted-foreground">Cancel</Button>
+                <Button type="submit" size="sm" disabled={editLoading || !editContent.trim()} className="gap-1">
+                  <Send className="w-3 h-3" />
+                  {editLoading ? "Saving..." : "Save"}
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <p className="text-sm text-muted-foreground leading-relaxed mb-2">{comment.content}</p>
+          )}
+
+          {!editing && (
+            <button
+              onClick={() => setShowReply(!showReply)}
+              className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Reply className="w-3 h-3" />
+              Reply
+            </button>
+          )}
 
           {/* Reply form */}
           <AnimatePresence>
@@ -133,7 +202,7 @@ function CommentItem({ comment, replies, postSlug, onReplySubmit }) {
                     className="pl-4 border-l-2 border-border/50 space-y-4"
                   >
                     {replies.map((reply) => (
-                      <div key={reply.id} className="flex gap-3">
+                      <div key={reply.id} className="flex gap-3 group/reply">
                         <div className="flex-shrink-0 w-7 h-7 rounded-full bg-secondary border border-border flex items-center justify-center text-muted-foreground text-xs font-bold">
                           {reply.author_name.charAt(0).toUpperCase()}
                         </div>
@@ -143,6 +212,16 @@ function CommentItem({ comment, replies, postSlug, onReplySubmit }) {
                             <span className="text-xs text-muted-foreground">
                               {format(new Date(reply.created_date), "MMM d, yyyy 'at' h:mm a")}
                             </span>
+                            {getMyCommentIds().includes(reply.id) && (
+                              <span className="ml-auto flex items-center gap-1 opacity-0 group-hover/reply:opacity-100 transition-opacity">
+                                <button
+                                  onClick={() => onDelete(reply.id)}
+                                  className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive transition-colors px-1.5 py-0.5 rounded hover:bg-destructive/10"
+                                >
+                                  <Trash2 className="w-3 h-3" /> Delete
+                                </button>
+                              </span>
+                            )}
                           </div>
                           <p className="text-sm text-muted-foreground leading-relaxed">{reply.content}</p>
                         </div>
@@ -162,6 +241,7 @@ function CommentItem({ comment, replies, postSlug, onReplySubmit }) {
 export default function CommentSection({ postSlug }) {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [myIds, setMyIds] = useState(getMyCommentIds());
 
   const fetchComments = async () => {
     const data = await base44.entities.Comment.filter({ post_slug: postSlug }, "created_date", 100);
@@ -174,24 +254,31 @@ export default function CommentSection({ postSlug }) {
   }, [postSlug]);
 
   const handleSubmit = async (data) => {
-    // Optimistic update: add a temporary comment immediately
     const tempId = `temp-${Date.now()}`;
-    const optimisticComment = {
-      ...data,
-      id: tempId,
-      created_date: new Date().toISOString(),
-      approved: true,
-    };
+    const optimisticComment = { ...data, id: tempId, created_date: new Date().toISOString(), approved: true };
     setComments((prev) => [...prev, optimisticComment]);
-
     try {
-      await base44.entities.Comment.create(data);
-      // Replace with server data
+      const created = await base44.entities.Comment.create(data);
+      if (created?.id) {
+        addMyCommentId(created.id);
+        setMyIds(getMyCommentIds());
+      }
       await fetchComments();
     } catch {
-      // Rollback on failure
       setComments((prev) => prev.filter((c) => c.id !== tempId));
     }
+  };
+
+  const handleDelete = async (id) => {
+    setComments((prev) => prev.filter((c) => c.id !== id));
+    removeMyCommentId(id);
+    setMyIds(getMyCommentIds());
+    await base44.entities.Comment.delete(id);
+  };
+
+  const handleEdit = async (id, newContent) => {
+    setComments((prev) => prev.map((c) => c.id === id ? { ...c, content: newContent } : c));
+    await base44.entities.Comment.update(id, { content: newContent });
   };
 
   const topLevel = comments.filter((c) => !c.parent_id);
@@ -244,6 +331,9 @@ export default function CommentSection({ postSlug }) {
                 replies={getReplies(comment.id)}
                 postSlug={postSlug}
                 onReplySubmit={handleSubmit}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                isOwn={myIds.includes(comment.id)}
               />
             ))}
           </div>
