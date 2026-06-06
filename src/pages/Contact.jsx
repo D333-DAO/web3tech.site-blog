@@ -37,13 +37,13 @@ export default function Contact() {
           <h2 className="font-heading font-semibold text-sm mb-4">Find Us Online</h2>
           <div className="space-y-3">
             <a
-              href="https://blog.theweb3tech.com"
+              href="https://theweb3tech.site"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <ExternalLink className="w-4 h-4 text-primary flex-shrink-0" />
-              The Web3 Tech Blog — blog.theweb3tech.com
+              The Web3 Tech Blog — theweb3tech.site
             </a>
             <a
               href="https://techderksinsights.blogspot.com"

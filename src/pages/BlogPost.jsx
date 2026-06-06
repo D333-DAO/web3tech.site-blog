@@ -118,7 +118,7 @@ export default function BlogPost() {
             {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
           </span>
           <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4" />{post.readTime} read
+            <Clock className="w-4 h-4" />{post.readTime}
           </span>
         </div>
 

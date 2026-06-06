@@ -25,7 +25,8 @@ const buttons = [
   },
 ];
 
-export default function ShareButtons({ title }) {
+export default function ShareButtons({ post }) {
+  const title = post?.title || "";
   const [copied, setCopied] = useState(false);
   const url = window.location.href;
 

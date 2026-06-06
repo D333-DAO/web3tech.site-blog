@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import HeroSection from "@/components/blog/HeroSection";
 import BlogCard from "@/components/blog/BlogCard";
 import { BLOG_POSTS } from "@/lib/blogData";
@@ -72,7 +72,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="https://blog.theweb3tech.com"
+                href="https://theweb3tech.site"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
@@ -87,14 +87,7 @@ export default function Home() {
               >
                 Visit TechDerks Insights
               </a>
-              <a
-                href="/index.html"
-                download="index.html"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-border/50 bg-background text-foreground font-medium text-sm hover:border-primary/50 transition-colors"
-              >
-                <Download className="w-4 h-4" />
-                Download index.html
-              </a>
+
             </div>
           </div>
         </div>

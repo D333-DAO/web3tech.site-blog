@@ -3,6 +3,7 @@ import { Settings as SettingsIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/AuthContext";
 import { base44 } from "@/api/base44Client";
+// base44 used for direct auth logout
 import {
   AlertDialog,
   AlertDialogAction,
@@ -96,7 +97,7 @@ export default function Settings() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => logout(true)}
+              onClick={() => { base44.auth.logout('/'); }}
               className="select-none"
             >
               Log Out
