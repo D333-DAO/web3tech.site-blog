@@ -76,8 +76,8 @@ function EditForm({ content, onSave, onCancel }) {
   );
 }
 
-function ReplyItem({ reply, onDelete }) {
-  const isOwn = getMyCommentIds().includes(reply.id);
+function ReplyItem({ reply, onDelete, user }) {
+  const isOwn = getMyCommentIds().includes(reply.id) || (user && reply.created_by_id && reply.created_by_id === user.id);
   return (
     <div className="flex gap-3">
       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-secondary border border-border flex items-center justify-center text-muted-foreground text-xs font-bold">
@@ -99,7 +99,7 @@ function ReplyItem({ reply, onDelete }) {
   );
 }
 
-function CommentItem({ comment, replies, postSlug, onReplySubmit, onDelete, onEdit, isOwn }) {
+function CommentItem({ comment, replies, postSlug, onReplySubmit, onDelete, onEdit, isOwn, user }) {
   const [showReply, setShowReply] = useState(false);
   const [showReplies, setShowReplies] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -155,7 +155,7 @@ function CommentItem({ comment, replies, postSlug, onReplySubmit, onDelete, onEd
               <AnimatePresence>
                 {showReplies && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pl-4 border-l-2 border-border/50 space-y-4">
-                    {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} onDelete={onDelete} />)}
+                    {replies.map((reply) => <ReplyItem key={reply.id} reply={reply} onDelete={onDelete} user={user} />)}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -258,6 +258,7 @@ export default function CommentSection({ postSlug }) {
                 onDelete={handleDelete}
                 onEdit={handleEdit}
                 isOwn={myIds.includes(comment.id) || (user && comment.created_by_id && comment.created_by_id === user.id)}
+                user={user}
               />
             ))}
           </div>
