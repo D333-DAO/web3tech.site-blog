@@ -743,7 +743,6 @@ console.log("CID:", result.path);
 
 IPFS is the foundation of most decentralized storage strategies in Web3 — understanding how it works is essential for anyone building dApps, NFT platforms, or censorship-resistant applications.`
   },
-  ,
   {
     id: "grass-io-decentralized-bandwidth-web3-review",
     slug: "grass-io-decentralized-bandwidth-web3-review",
