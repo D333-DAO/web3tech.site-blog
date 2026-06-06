@@ -40,7 +40,7 @@ export default function SearchOverlay({ open, onClose }) {
     return (
       post.title.toLowerCase().includes(q) ||
       post.excerpt.toLowerCase().includes(q) ||
-      post.content.toLowerCase().includes(q) ||
+      (post.content || '').toLowerCase().includes(q) ||
       post.tags.some((t) => t.toLowerCase().includes(q)) ||
       post.category.toLowerCase().includes(q)
     );

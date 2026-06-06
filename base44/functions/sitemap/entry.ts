@@ -67,6 +67,13 @@ const BLOG_SLUGS = [
   "update-windows-11-apps-cmd-winget-usoclient",
   "copilot-ai-transforming-business-everyday-users",
   "create-cryptocurrency-token-reach-bitcoin-value",
+  // batch 2 extras
+  "best-step-up-transformer-iceriver-ks3m-miner",
+  "critical-aspect-working-it-support-specialist",
+  "google-aluminum-os-android-pc-laptop-killer",
+  "information-on-the-site-majorgeeks-com",
+  "install-google-chrome-ubuntu-desktop-guide",
+  "using-containers-to-interact-with-smart-contracts",
 ];
 
 const STATIC_PAGES = [
