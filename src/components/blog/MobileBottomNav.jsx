@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Home, BookOpen, Info, Settings } from "lucide-react";
+import { useAuth } from "@/lib/AuthContext";
 
-const TABS = [
+const BASE_TABS = [
   { label: "Home", path: "/", icon: Home },
   { label: "Blog", path: "/blog", icon: BookOpen },
   { label: "About", path: "/about", icon: Info },
-  { label: "Settings", path: "/settings", icon: Settings },
 ];
 
 // Keys for persisting scroll position per tab
@@ -15,6 +15,10 @@ const scrollKey = (path) => `tab_scroll_${path}`;
 export default function MobileBottomNav() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isAuthenticated } = useAuth();
+  const TABS = isAuthenticated
+    ? [...BASE_TABS, { label: "Settings", path: "/settings", icon: Settings }]
+    : BASE_TABS;
 
   const handleTabPress = useCallback((path) => {
     const current = location.pathname;
