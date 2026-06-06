@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Terminal, ExternalLink, Rss } from "lucide-react";
 import { AUTHOR } from "@/lib/blogData";
 
-const RSS_URL = "https://blog.theweb3tech.com/api/rssFeed";
+const RSS_URL = "https://theweb3tech.site/api/rssFeed";
 
 export default function Footer() {
   return (
