@@ -24,6 +24,14 @@ export default function Navbar() {
 
   const isChildRoute = location.pathname !== "/" && location.pathname !== "/blog" && location.pathname !== "/about" && location.pathname !== "/contact";
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/blog");
+    }
+  };
+
   useEffect(() => {
     const handler = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -47,7 +55,7 @@ export default function Navbar() {
           {/* Back button on child routes (mobile) */}
           {isChildRoute && (
             <button
-              onClick={() => navigate(-1)}
+              onClick={handleBack}
               className="md:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground select-none [-webkit-user-select:none] mr-1"
               aria-label="Go back"
             >
