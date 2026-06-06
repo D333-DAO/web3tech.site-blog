@@ -3,6 +3,7 @@ import { Settings as SettingsIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/AuthContext";
 import { base44 } from "@/api/base44Client";
+import MyCommentsSection from "@/components/blog/MyCommentsSection";
 // base44 used for direct auth logout
 import {
   AlertDialog,
@@ -104,6 +105,9 @@ export default function Settings() {
             </Button>
           </div>
         )}
+
+        {/* My Comments — available to all visitors */}
+        <MyCommentsSection />
 
         {/* Delete account — only for authenticated users */}
         {isAuthenticated && <DeleteAccountSection />}
