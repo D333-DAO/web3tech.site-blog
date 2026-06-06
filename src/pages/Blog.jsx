@@ -60,18 +60,28 @@ export default function Blog() {
         </p>
       </motion.div>
 
-      {/* Search + Filters */}
+      {/* Search Bar — Full Width */}
+      <div className="relative mb-6">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+        <Input
+          placeholder="Search articles by title, tag, or keyword..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-12 pr-4 h-12 text-base bg-secondary border-border rounded-xl focus:ring-2 focus:ring-primary/30"
+        />
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery("")}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground text-sm"
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
+      {/* Filters */}
       <div className="space-y-4 mb-8">
         <div className="flex gap-2">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Search articles..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-secondary border-border"
-            />
-          </div>
           {/* Mobile filter drawer trigger */}
           <MobileDrawerSelect
             open={drawerOpen}
