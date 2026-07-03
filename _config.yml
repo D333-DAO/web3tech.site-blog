@@ -1,0 +1,7 @@
+title: Web3Tech Site Blog
+description: Web3Tech blog powered by Jekyll on GitHub Pages
+url: "https://d333-dao.github.io"
+baseurl: "/web3tech.site-blog"
+theme: minima
+plugins:
+  - jekyll-feed
