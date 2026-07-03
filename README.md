@@ -1,39 +1,21 @@
-**Welcome to your Base44 project** 
+# web3tech.site-blog
 
-**About**
+This repository now includes a **Jekyll site** configured for deployment to **GitHub Pages** using GitHub Actions.
 
-View and Edit  your app on [Base44.com](http://Base44.com) 
+## Jekyll site structure
 
-This project contains everything you need to run your app locally.
+- `_config.yml` - Jekyll configuration
+- `index.md` - site home page
+- `_posts/` - blog posts
+- `.github/workflows/deploy-jekyll-pages.yml` - Pages deployment workflow
 
-**Edit the code in your local development environment**
+## Deploying to GitHub Pages
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
+1. In GitHub, open **Settings > Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Push changes to `main`.
+4. GitHub Actions will build and deploy the Jekyll site automatically.
 
-**Prerequisites:** 
+The site URL will be:
 
-1. Clone the repository using the project's Git URL 
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
-
-```
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=your_backend_url
-
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
-```
-
-Run the app: `npm run dev`
-
-**Publish your changes**
-
-Open [Base44.com](http://Base44.com) and click on Publish.
-
-**Docs & Support**
-
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
-
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+`https://d333-dao.github.io/web3tech.site-blog/`
